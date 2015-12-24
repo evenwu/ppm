@@ -6,15 +6,19 @@ $sizer = $('#size-slider'),
 $loading = $('#loading');
 $uploading = $('#uploading');
 
+function resetUserImage(pos) {
+  $userimage
+    .css('background-size',pos[0]+'px '+pos[1]+'px')
+    .css('background-position',pos[2]+'px '+pos[3]+'px');
+}
+
 $(window).load(function()
 {
   var
   container_size = $userimage.width(),
   userimage_size = getImgSize(getBackgroundImage($userimage));
   pos = resizeDragger(userimage_size,container_size);
-  $userimage
-    .css('background-size',pos[0]+'px '+pos[1]+'px')
-    .css('background-position',pos[2]+'px '+pos[3]+'px');
+  resetUserImage(pos)
 });
 $(document).ready(function()
 {
@@ -238,7 +242,8 @@ function loadImage(files) {
       value = $('input[name=template]:checked').val(),
       container_size = $userimage.width(),
       userimage_size = [this.width,this.height];
-      resizeDragger(userimage_size, container_size,value);
+      pos = resizeDragger(userimage_size, container_size,value);
+      resetUserImage(pos)
 
       $loading.hide();
       $uploading.fadeOut();
