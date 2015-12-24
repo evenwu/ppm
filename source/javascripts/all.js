@@ -6,14 +6,6 @@ $sizer = $('#size-slider'),
 $loading = $('#loading');
 $uploading = $('#uploading');
 
-function current_container_size() {
-  $userimage.width();
-}
-
-function current_userimage_size() {
-  getImgSize(getBackgroundImage($userimage));
-}
-
 $(window).load(function()
 {
   var
@@ -246,7 +238,7 @@ function loadImage(files) {
       value = $('input[name=template]:checked').val(),
       container_size = $userimage.width(),
       userimage_size = [this.width,this.height];
-      resizeDragger(current_userimage_size(), current_container_size(),value);
+      resizeDragger(userimage_size, container_size,value);
 
       $loading.hide();
       $uploading.fadeOut();
