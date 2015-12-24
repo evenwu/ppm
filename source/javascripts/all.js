@@ -6,12 +6,23 @@ $sizer = $('#size-slider'),
 $loading = $('#loading');
 $uploading = $('#uploading');
 
+function current_container_size() {
+  $userimage.width();
+}
+
+function current_userimage_size() {
+  getImgSize(getBackgroundImage($userimage));
+}
+
 $(window).load(function()
 {
   var
   container_size = $userimage.width(),
   userimage_size = getImgSize(getBackgroundImage($userimage));
-  resizeDragger(userimage_size,container_size);
+  pos = resizeDragger(userimage_size,container_size);
+  $userimage
+    .css('background-size',pos[0]+'px '+pos[1]+'px')
+    .css('background-position',pos[2]+'px '+pos[3]+'px');
 });
 $(document).ready(function()
 {
@@ -235,7 +246,7 @@ function loadImage(files) {
       value = $('input[name=template]:checked').val(),
       container_size = $userimage.width(),
       userimage_size = [this.width,this.height];
-      resizeDragger(userimage_size,container_size,value);
+      resizeDragger(current_userimage_size(), current_container_size(),value);
 
       $loading.hide();
       $uploading.fadeOut();
@@ -253,7 +264,7 @@ function getBackgroundImage(element)
   var url = element.css('background-image');
   return url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
 }
-function resizeDragger(size,wrapper,value,upload)
+function resizeDragger(size,wrapper,value,upload,init)
 {
   value = typeof value !== 'undefined' ? value : 1;
   upload = typeof upload !== 'undefined' ? upload : 0;
@@ -274,47 +285,48 @@ function resizeDragger(size,wrapper,value,upload)
     left = 0;
   }
 
-  if(value == 6){
-    left = wrapper*0.2*-1;
-    if(size[0] > size[1]) left -= (width-wrapper)*0.5;
-  }
-  else if(value == 9){
-    $sizer.slider('value',65);
-    if(size[0] > size[1]) {
-      left = wrapper*0.65*0.13*0.5;
-      width *=0.65;
-      height *=0.65;
-      top = (wrapper - height)*0.48;
-    }
-    else {
-      left = wrapper*0.65*0.13*0.5;
-      width *=0.65;
-      height *=0.65;
-      top = (wrapper - height)*0.48;
-    }
-  }
-  else if(value == 10){
-    $sizer.slider('value',92);
-    if(size[0] > size[1]) {
-      width = wrapper*0.92;
-      height = width*(size[1]/size[0]);
-      top = wrapper*0.045;
-      left = (wrapper-width)*0.5;
-    }
-    else {
+  // if(value == 6){
+  //   left = wrapper*0.2*-1;
+  //   if(size[0] > size[1]) left -= (width-wrapper)*0.5;
+  // }
+  // else if(value == 9){
+  //   $sizer.slider('value',65);
+  //   if(size[0] > size[1]) {
+  //     left = wrapper*0.65*0.13*0.5;
+  //     width *=0.65;
+  //     height *=0.65;
+  //     top = (wrapper - height)*0.48;
+  //   }
+  //   else {
+  //     left = wrapper*0.65*0.13*0.5;
+  //     width *=0.65;
+  //     height *=0.65;
+  //     top = (wrapper - height)*0.48;
+  //   }
+  // }
+  // else if(value == 10){
+  //   $sizer.slider('value',92);
+  //   if(size[0] > size[1]) {
+  //     width = wrapper*0.92;
+  //     height = width*(size[1]/size[0]);
+  //     top = wrapper*0.045;
+  //     left = (wrapper-width)*0.5;
+  //   }
+  //   else {
       width = width*0.92;
       height = height*0.92;
       top = wrapper*0.045;
       left = (wrapper-width)*0.5;
-    }
-  }
+  //   }
+  // }
 
   $dragger
     .css('width',width+'px').css('height',height+'px')
     .css('top',top+'px').css('left',left+'px');
-  $userimage
-    .css('background-size',width+'px '+height+'px')
-    .css('background-position',left+'px '+top+'px');
+  // $userimage
+  //   .css('background-size',width+'px '+height+'px')
+  //   .css('background-position',left+'px '+top+'px');
+  return [width, height, left, top]
 }
 function getBackgroundSize(string)
 {
