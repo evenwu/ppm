@@ -2,6 +2,7 @@ var
 $userimage = $('#userimage .inner'),
 $coverimage = $('#coverimage .inner'),
 $dragger = $('#dragger'),
+$draggerBorder = $('#dragger-border'),
 $sizer = $('#size-slider'),
 $loading = $('#loading');
 $uploading = $('#uploading');
@@ -33,13 +34,15 @@ $(document).ready(function()
   });
 
   // dragger
+  $draggerBorder.css('position', 'absolute').css('z-index', '-100').css('width', '100%').css('height', '100%')
   $dragger.draggable({
     drag: function(event) {
       $userimage.css('background-position',$dragger.css('left')+' '+$dragger.css('top'));
       if($userimage.hasClass('dragged') == false) $userimage.addClass('dragged');
       var value = $('input[name=template]:checked').val();
-      if(value == 9 || value == 10) $userimage.attr('class','inner');
-    }
+      // if(value == 9 || value == 10) $userimage.attr('class','inner');
+    },
+    containment: $draggerBorder
   });
 
   // size slider
@@ -66,6 +69,16 @@ $(document).ready(function()
         $userimage
           .css('background-size',width+'px '+height+'px')
           .css('background-position',left+'px '+top+'px');
+        originSize = $coverimage.width()
+        // console.log(width, height)
+        borderWidth  = width <= originSize ? originSize : originSize + ((width - originSize) * 2)
+        borderHeight = height <= originSize ? originSize : originSize + ((height - originSize) * 2)
+        // console.log(borderWidth, borderHeight)
+        borderLeft = (originSize / 2) - borderWidth*0.5,
+        borderTop = (originSize / 2) - borderHeight*0.5;
+        $draggerBorder
+          .css('width',borderWidth+'px').css('height',borderHeight+'px')
+          .css('top',borderTop+'px').css('left',borderLeft+'px');
       });
 
     }
