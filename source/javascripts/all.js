@@ -48,8 +48,8 @@ $(document).ready(function()
   // size slider
   $sizer.slider({
     value: 100,
-    max: 170,
-    min: 30,
+    max: 300,
+    min: 100,
     slide: function(event, ui) {
       var
       truesize = getBackgroundSize($userimage.css('background-size')),
@@ -323,10 +323,10 @@ function resizeDragger(size,wrapper,value,upload,init)
   //     left = (wrapper-width)*0.5;
   //   }
   //   else {
-      width = width*0.92;
-      height = height*0.92;
-      top = wrapper*0.045;
-      left = (wrapper-width)*0.5;
+      // width = width*0.92;
+      // height = height*0.92;
+      // top = wrapper*0.045;
+      // left = (wrapper-width)*0.5;
   //   }
   // }
 
