@@ -1,0 +1,12 @@
+.header {
+  background-color: white;
+  padding: 6px 12px;
+
+  .logo {
+    @include adjust-font-size-to(24px, 1);
+    margin: 0 auto;
+    display: block;
+    @include replace-text-with-svg('logo-zh');
+  }
+
+}

@@ -1,3 +1,5 @@
+require 'slim'
+Slim::Engine.set_default_options :pretty => false, :disable_escape => true, :format => :html5
 
 sourcemap = false # by Fire.app
 css_dir = "stylesheets" # by Fire.app
@@ -14,5 +16,5 @@ line_comments = false # by Fire.app
 sass_options = {:debug_info=>false} # by Fire.app
 fireapp_coffeescript_options = {:bare=>false} # by Fire.app
 fireapp_livescript_options = {:bare=>false} # by Fire.app
-
+preferred_syntax = :scss
 

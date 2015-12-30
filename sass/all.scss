@@ -1,21 +1,23 @@
-@import "compass";
-@import "susy";
+// ==== setup ====
+@import "setup";
+
 
 // helper
-@import "helper/form";
-@import "helper/global";
+// @import "helper/form";
+// @import "helper/global";
 
 // config
-@import "config/color";
-@import "config/susy";
-@import "config/typography";
-@import "config/global";
+// @import "config/color";
+// @import "config/susy";
+// @import "config/typography";
+// @import "config/global";
 
 // core
-@import "core/typography";
-@import "core/global";
+// @import "core/typography";
+// @import "core/global";
 
 // partial
+@import "partials/header";
 @import "partials/bootstrap";
 @import "partials/button";
 @import "partials/corner";
