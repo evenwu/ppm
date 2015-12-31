@@ -1,16 +1,21 @@
 .editor-section {
 
   padding: 48px 0px;
-
   background-color: lighten(#183840, 2.5%);
 
   .upload-image {
     @include pie-clearfix;
-    margin: 0 -6px rhythm(1);
+    margin: 0 auto rhythm(1);
+    max-width: 320px;
     text-align: center;
+
+    .upload-image-inner {
+      margin: 0 -3px;
+    }
+
     .upload-image-row {
       @include box-sizing(border-box);
-      padding: 0 6px;
+      padding: 0 3px;
       width: 50%;
       display: inline-block;
     }
@@ -219,8 +224,13 @@
       vertical-align: top;
     }
 
+    .upload-image {
+      max-width: none;
+    }
+
     .preview-image {
-      width: 75%;
+      width: 100%;
+      max-width: none;
     }
 
     .templates {
@@ -261,13 +271,16 @@
       padding: 0 24px;
     }
     .upload-image {
-      @include trailer(1.5);
+      // @include trailer(1.5);
     }
     .preview-image {
       @include trailer(1);
     }
     .templates {
       @include trailer(2);
+      .btn {
+        width: 20%;
+      }
     }
   }
 

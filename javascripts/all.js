@@ -55,7 +55,7 @@ $(document).ready(function() {
       truesize = getBackgroundSize($userimage.css('background-size')),
       position = getBackgroundPosition($userimage.css('background-position')),
       center = getBackgroundCenterPoint(truesize,position);
-      previewSize = $('.preview-image').outerHeight(true) / 500;
+      previewSize = $('.preview-image').outerHeight(true) / 1000;
       $('<img/>').attr('src',getBackgroundImage($userimage))
       .load(function() {
         var
