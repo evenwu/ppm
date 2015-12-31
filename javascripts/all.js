@@ -375,3 +375,6 @@ function nonImageLoadState() {
   }
   drawDftImage(dftImage);
 }
+
+// smooth-scroll-link
+$('.smooth-scroll-link').smoothScroll();
