@@ -65,6 +65,17 @@ $(document).ready(function() {
         height = size[1]*(ui.value)/100*previewSize,
         left = center[0] - width*0.5,
         top = center[1] - height*0.5;
+
+        if(top > 0){
+          top = 0
+        } else if(top + height < $originSize) {
+          top = $originSize - height
+        }
+        if(left > 0){
+          left = 0;
+        } else if(left + width < $originSize){
+          left = $originSize - width
+        }
         $dragger
           .css('width',width+'px').css('height',height+'px')
           .css('top',top+'px').css('left',left+'px');
@@ -334,7 +345,6 @@ function resizeDragger(size,wrapper,value,upload,init)
       // left = (wrapper-width)*0.5;
   //   }
   // }
-
   $dragger
     .css('width',width+'px').css('height',height+'px')
     .css('top',top+'px').css('left',left+'px');
