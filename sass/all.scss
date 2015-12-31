@@ -2,24 +2,13 @@
 @import "setup";
 
 
-// helper
-// @import "helper/form";
-// @import "helper/global";
+// component
+@import "components/button";
 
-// config
-// @import "config/color";
-// @import "config/susy";
-// @import "config/typography";
-// @import "config/global";
-
-// core
-// @import "core/typography";
-// @import "core/global";
 
 // partial
 @import "partials/header";
 @import "partials/bootstrap";
-@import "partials/button";
 @import "partials/corner";
 @import "partials/generator";
 @import "partials/gototop";
