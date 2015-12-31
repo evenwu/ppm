@@ -1,1 +1,3 @@
-/build
+/build*
+.sass-cache
+fire_app_log*
