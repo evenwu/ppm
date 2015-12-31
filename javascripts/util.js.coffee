@@ -6,7 +6,7 @@ window.urlToBlob = (url, cb)->
   xhr.onload = (e) ->
     # Obtain a blob: URL for the image data.
     arrayBufferView = new Uint8Array(@response)
-    blob = new Blob([ arrayBufferView ], type: 'image/jpeg')
+    blob = new Blob([ arrayBufferView ], type: 'image/png')
     cb(blob)
 
   xhr.send()

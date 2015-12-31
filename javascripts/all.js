@@ -6,6 +6,7 @@ $draggerBorder = $('#dragger-border'),
 $sizer = $('#size-slider'),
 $loading = $('#loading');
 $uploading = $('#uploading');
+var $originSize = $coverimage.width();
 
 function resetUserImage(pos) {
   $userimage
@@ -227,10 +228,10 @@ window.loadImage = function(files) {
   }
   function imageLoaded() {
     var canvas = document.getElementById("canvas")
-    canvas.width = img.width;
-    canvas.height = img.height;
+    canvas.width = $originSize;
+    canvas.height = $originSize;
     var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
+    ctx.drawImage(img, 0, 0, $originSize, $originSize);
     var base64 = canvas.toDataURL("image/png");
 
     $('#source').attr('value',base64);
@@ -258,7 +259,7 @@ window.loadImage = function(files) {
       var
       value = $('input[name=template]:checked').val(),
       container_size = $userimage.width(),
-      userimage_size = [this.width,this.height];
+      userimage_size = [$originSize, $originSize];
       pos = resizeDragger(userimage_size, container_size,value);
       resetUserImage(pos)
 
