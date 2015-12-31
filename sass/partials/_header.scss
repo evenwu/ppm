@@ -1,12 +1,23 @@
 .header {
   background-color: white;
-  padding: 6px 12px;
 
   .logo {
-    @include adjust-font-size-to(24px, 1);
-    margin: 0 auto;
-    display: block;
-    @include replace-text-with-svg('logo-zh');
+    padding: 6px 12px;
+    a {
+      @include adjust-font-size-to(24px, 1);
+      margin: 0 auto;
+      display: block;
+      @include replace-text-with-svg('logo-zh-mobile');
+    }
+  }
+
+  @include at-breakpoint(480px) {
+    .logo {
+      a {
+        @include replace-text-with-svg('logo-zh');
+      }
+    }
+
   }
 
 }
