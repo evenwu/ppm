@@ -1,0 +1,37 @@
+.action-section
+
+  .action-container
+    +pie-clearfix
+    +box-sizing(border-box)
+    min-height: 100vh
+    padding: 36px 0px
+
+  .btn-team
+    +pie-clearfix
+    margin-right: auto
+    margin-left: auto
+
+  .share, .download
+    display: block
+    width: 204px
+    margin: 0 auto 17px auto
+    padding: 11px
+
+  .icon-facebook:before, .icon-download-icon:before
+    display: block
+    margin-bottom: 6px
+    font-size: 26px
+
+  +at-breakpoint($pad)
+
+    .container
+      +padding-leader(5.5)
+
+    .btn-team
+      width: 448px
+
+    .share, .download
+      display: block
+      float: left
+      margin: 0 10px 17px 10px
+

@@ -1,0 +1,49 @@
+.intro-section
+  width: 100%
+  overflow: hidden
+
+  .intro-container
+    +pie-clearfix
+    +box-sizing(border-box)
+    min-height: 100vh
+    padding: 36px 0px
+
+  .title
+    text-align: center
+    +adjust-font-size-to(28px)
+
+    &:after
+      content: ''
+      display: block
+      margin: 24px auto
+      +replace-text-with-svg("img_no2")
+
+  .description
+    max-width: 440px
+    margin-left: auto
+    margin-right: auto
+    +margin-trailer(1.5)
+    +adjust-font-size-to(15px)
+
+  .start
+    display: block
+    width: 160px
+    margin: 0 auto
+
+  +at-breakpoint($pad)
+    .container
+      +padding-leader(5.5)
+
+    .title
+      text-align: left
+
+      &:after
+        display: none
+
+    .description
+      min-width: 275px
+      margin-left: 0px
+      margin-right: 0px
+
+    .start
+      margin: 0px
