@@ -208,7 +208,7 @@ function handleDragOver(evt) {
 }
 
 // function
-function loadImage(files) {
+window.loadImage = function(files) {
   var file, fr, img;
   if (!files) {
     alert('悲劇！您的瀏覽器不支援檔案上傳！')
@@ -378,3 +378,7 @@ function nonImageLoadState() {
 
 // smooth-scroll-link
 $('.smooth-scroll-link').smoothScroll();
+
+window.xx = function(v) {
+  console.log(v)
+}
