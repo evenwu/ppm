@@ -18,6 +18,7 @@ $(window).load(function() {
   container_size = $userimage.width(),
   userimage_size = getImgSize(getBackgroundImage($userimage));
   pos = resizeDragger(userimage_size,container_size);
+  nonImageLoadState();
   resetUserImage(pos)
 });
 
@@ -356,4 +357,21 @@ function getBackgroundCenterPoint(size,position){
 }
 function px2int(string){
   return parseFloat(string.replace('px',''));
+}
+
+// 沒有圖片上傳時的預設圖片處理 function，目的是讓預設圖片也可以被下載
+function nonImageLoadState() {
+  var dftImage = new Image();
+  dftImage.src = "/images/sample.jpg";
+  function drawDftImage(dftImage) {
+    var dftcv = document.getElementById("canvas");
+    dftcv.width = dftImage.width;
+    dftcv.height = dftImage.height;
+    var dftctx = dftcv.getContext("2d");
+    dftctx.drawImage(dftImage, 0, 0);
+    var dftimgbase64 = dftcv.toDataURL("image/png");
+    $('#source').attr('value',dftimgbase64);
+    $userimage.css('background-image','url('+dftimgbase64+')');
+  }
+  drawDftImage(dftImage);
 }
