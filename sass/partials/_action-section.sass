@@ -1,10 +1,11 @@
 .action-section
+  padding: 36px 0px
 
-  .action-container
+
+  .container
     +pie-clearfix
     +box-sizing(border-box)
-    min-height: 100vh
-    padding: 36px 0px
+    // min-height: 100vh
 
   .btn-team
     +pie-clearfix
@@ -23,9 +24,7 @@
     font-size: 26px
 
   +at-breakpoint($pad)
-
-    .container
-      +padding-leader(5.5)
+    padding: 144px 0
 
     .btn-team
       width: 448px

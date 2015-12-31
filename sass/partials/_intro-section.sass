@@ -1,12 +1,11 @@
 .intro-section
-  width: 100%
-  overflow: hidden
 
-  .intro-container
+  padding: 36px 0px
+
+  .container
     +pie-clearfix
     +box-sizing(border-box)
-    min-height: 100vh
-    padding: 36px 0px
+    // min-height: 100vh
 
   .title
     text-align: center
@@ -31,8 +30,7 @@
     margin: 0 auto
 
   +at-breakpoint($pad)
-    .container
-      +padding-leader(5.5)
+    padding: 144px 0
 
     .title
       text-align: left
