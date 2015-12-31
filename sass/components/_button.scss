@@ -60,6 +60,23 @@
   }
 }
 
+.btn_primary-dark {
+  color: white;
+  border-color: #2B6F69;
+  background-color: #2B6F69;
+  &:hover {
+    color: white;
+    border-color: darken(#2B6F69, 5%);
+    background-color: darken(#2B6F69, 5%);
+  }
+  &:disabled , &.is-disabled {
+    cursor: default;
+    color: $color-gray;
+    border-color: $color-gray-light;
+    background-color: $color-gray-light;
+  }
+}
+
 .btn_danger {
   color: white;
   border-color: $color-red;
