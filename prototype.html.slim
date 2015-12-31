@@ -5,13 +5,13 @@ html lang="zh-TW"
     .header
       h1.logo: a href="http://iing.tw" 頭像產生器
     = render '/partial/intro_section'
-    = render '/partial/editor'
+    = render '/partial/editor_section'
     = render '/partial/action_section'
 
     form action="#" onsubmit="return false;"
       input#uploadInput name="Filedata" type="file"
       #uploading 圖片讀取中，請稍後
-    input#source name="source" type="hidden" value="http://placekitten.com/g/500/500"
+    input#source name="source" type="hidden" value="/images/sample.jpg"
     .hide
       canvas#canvas
       canvas#thumb

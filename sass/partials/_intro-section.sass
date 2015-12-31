@@ -1,6 +1,6 @@
 .intro-section
 
-  padding: 36px 0px
+  padding: 48px 0px
 
   .container
     +pie-clearfix
@@ -45,3 +45,11 @@
 
     .start
       margin: 0px
+
+  +at-breakpoint($desktop)
+    padding: 188px 0
+
+    .title
+      +adjust-font-size-to(36px, 1.5)
+      // padding: 200px 0
+

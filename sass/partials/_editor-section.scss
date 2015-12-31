@@ -1,16 +1,16 @@
-.editor {
+.editor-section {
 
-  padding: 24px 0;
+  padding: 48px 0px;
 
   background-color: lighten(#183840, 2.5%);
 
   .upload-image {
     @include pie-clearfix;
-    margin: 0 -3px rhythm(1);
+    margin: 0 -6px rhythm(1);
     text-align: center;
     .upload-image-row {
       @include box-sizing(border-box);
-      padding: 0 3px;
+      padding: 0 6px;
       width: 50%;
       display: inline-block;
     }
@@ -28,11 +28,11 @@
 
   .preview-image {
     position: relative;
-    max-width: 360px;
+    max-width: 320px;
     @include box-sizing(border-box);
     width: 80%;
     margin: 0 auto rhythm(0.5);
-    border: 5px solid rgba(white, 0.5);
+    border: 1px solid rgba(white, 0.5);
     overflow: hidden;
     &:after {
       z-index: -1;
@@ -76,7 +76,9 @@
     background: transparent;
     border: none;
     position: relative;
-    margin: 0 24px;
+    margin: 0 48px;
+    cursor: pointer;
+
 
     &:before {
       content: '';
@@ -109,15 +111,17 @@
       margin-top: -3px;
       margin-left: -12px;
     }
-    .zoomin {
+    .zoomin, .zoomout {
       color: $color-primary;
       position: absolute;
-      right: -24px;
+      @include adjust-font-size-to(24px, 1);
+      color: rgba(white, 0.8);
+    }
+    .zoomin {
+      right: -48px;
     }
     .zoomout {
-      color: $color-primary;
-      position: absolute;
-      left: -24px;
+      left: -48px;
     }
   }
   #userimage .inner {
@@ -174,7 +178,7 @@
         left: 0;
         bottom: 0;
         right: 0;
-        border: 2px solid transparent;
+        border: 1px solid rgba(white, 0.25);
         @include transition(border 0.5s);
       }
       &:hover:before {
@@ -204,19 +208,19 @@
     padding: 144px 0;
 
     .container {
-      padding: 0 24px;
+      padding: 0 36px;
     }
 
     .editor-row {
       display: inline-block;
       width: 50%;
       position: relative;
-      padding: 0 24px;
+      padding: 0 12px;
       vertical-align: top;
     }
 
     .preview-image {
-      @include trailer(1);
+      width: 75%;
     }
 
     .templates {
@@ -243,6 +247,27 @@
       .btn {
         float: right;
       }
+    }
+  }
+
+  @include at-breakpoint($desktop) {
+    // padding: 200px 0;
+
+    .container {
+      padding: 0 24px;
+    }
+
+    .editor-row {
+      padding: 0 24px;
+    }
+    .upload-image {
+      @include trailer(1.5);
+    }
+    .preview-image {
+      @include trailer(1);
+    }
+    .templates {
+      @include trailer(2);
     }
   }
 
