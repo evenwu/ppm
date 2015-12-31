@@ -2,6 +2,7 @@
   background-color: white;
 
   .logo {
+    @include trailer(0);
     padding: 6px 12px;
     a {
       @include adjust-font-size-to(24px, 1);

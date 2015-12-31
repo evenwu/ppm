@@ -13,16 +13,16 @@ function resetUserImage(pos) {
     .css('background-position',pos[2]+'px '+pos[3]+'px');
 }
 
-$(window).load(function()
-{
+$(window).load(function() {
   var
   container_size = $userimage.width(),
   userimage_size = getImgSize(getBackgroundImage($userimage));
   pos = resizeDragger(userimage_size,container_size);
+  nonImageLoadState();
   resetUserImage(pos)
 });
-$(document).ready(function()
-{
+
+$(document).ready(function() {
   // ie alert
   $("body").iealert({
     support: 'ie9',
@@ -55,12 +55,13 @@ $(document).ready(function()
       truesize = getBackgroundSize($userimage.css('background-size')),
       position = getBackgroundPosition($userimage.css('background-position')),
       center = getBackgroundCenterPoint(truesize,position);
+      previewSize = $('.preview-image').outerHeight(true) / 1000;
       $('<img/>').attr('src',getBackgroundImage($userimage))
       .load(function() {
         var
         size = [this.width,this.height],
-        width = size[0]*(ui.value)/100,
-        height = size[1]*(ui.value)/100,
+        width = size[0]*(ui.value)/100*previewSize,
+        height = size[1]*(ui.value)/100*previewSize,
         left = center[0] - width*0.5,
         top = center[1] - height*0.5;
         $dragger
@@ -165,11 +166,10 @@ function createImage(template,source,x,y,w,h){
   var msie = ua.indexOf("MSIE ");
   if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)){
     var html="<p>請按右鍵另存圖片</p>";
-    html+="<img src='"+base64+"' alt='7'/>";
+    html+="<img src='"+base64+"' alt='iing-no-2'/>";
     var tab=window.open();
     tab.document.write(html);
-  }
-  else{
+  } else {
     base64 = base64.replace("image/png", "image/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=iing-no-2.png;")
     $('#download').attr('href',base64);
     console.log(base64)
@@ -358,3 +358,23 @@ function getBackgroundCenterPoint(size,position){
 function px2int(string){
   return parseFloat(string.replace('px',''));
 }
+
+// 沒有圖片上傳時的預設圖片處理 function，目的是讓預設圖片也可以被下載
+function nonImageLoadState() {
+  var dftImage = new Image();
+  dftImage.src = "/images/sample.jpg";
+  function drawDftImage(dftImage) {
+    var dftcv = document.getElementById("canvas");
+    dftcv.width = dftImage.width;
+    dftcv.height = dftImage.height;
+    var dftctx = dftcv.getContext("2d");
+    dftctx.drawImage(dftImage, 0, 0);
+    var dftimgbase64 = dftcv.toDataURL("image/png");
+    $('#source').attr('value',dftimgbase64);
+    $userimage.css('background-image','url('+dftimgbase64+')');
+  }
+  drawDftImage(dftImage);
+}
+
+// smooth-scroll-link
+$('.smooth-scroll-link').smoothScroll();

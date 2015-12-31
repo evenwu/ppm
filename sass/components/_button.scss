@@ -34,6 +34,10 @@
     border-color: darken($color-gray-light, 5%);
     background-color: darken($color-gray-light, 5%);
   }
+  &:active, &:focus {
+    @include box-shadow(none);
+    outline: none;
+  }
   &:disabled , &.is-disabled {
     cursor: default;
     color: $color-gray;
@@ -47,10 +51,27 @@
   color: white;
   border-color: $color-primary;
   background-color: $color-primary;
-  &:hover {
+  &:hover, &:focus {
     color: white;
     border-color: darken($color-primary, 5%);
     background-color: darken($color-primary, 5%);
+  }
+  &:disabled , &.is-disabled {
+    cursor: default;
+    color: $color-gray;
+    border-color: $color-gray-light;
+    background-color: $color-gray-light;
+  }
+}
+
+.btn_primary-dark {
+  color: white;
+  border-color: #2B6F69;
+  background-color: #2B6F69;
+  &:hover, &:focus {
+    color: white;
+    border-color: darken(#2B6F69, 5%);
+    background-color: darken(#2B6F69, 5%);
   }
   &:disabled , &.is-disabled {
     cursor: default;
@@ -64,7 +85,7 @@
   color: white;
   border-color: $color-red;
   background-color: $color-red;
-  &:hover {
+  &:hover, &:focus {
     color: white;
     border-color: $color-red-dark;
     background-color: $color-red-dark;
@@ -80,7 +101,7 @@
 .btn_outline {
   border-color: $color-black;
   background-color: transparent;
-  &:hover {
+  &:hover, &:focus {
     border-color: $color-black;
     background-color: $color-black;
     color: white;
@@ -96,7 +117,7 @@
   border-color: $color-primary;
   color: $color-primary;
   background-color: transparent;
-  &:hover {
+  &:hover, &:focus {
     border-color: $color-primary;
     background-color: $color-primary;
     color: white;
@@ -112,7 +133,7 @@
   border-color: $color-red;
   color: $color-red;
   background-color: transparent;
-  &:hover {
+  &:hover, &:focus {
     border-color: $color-red;
     background-color: $color-red;
     color: white;

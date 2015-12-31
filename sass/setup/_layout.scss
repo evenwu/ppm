@@ -24,6 +24,11 @@ body {
 
 .container {
   padding: 0 $grid-padding;
-  max-width: 960px;
+  max-width: 1024px;
   margin: 0 auto;
+  width: auto !important;
+
+  @include at-breakpoint($pad) {
+    padding: 0 48px;
+  }
 }

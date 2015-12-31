@@ -1,0 +1,55 @@
+.action-section
+  +box-sizing(border-box)
+  position: relative
+  padding: 48px 0px
+  text-align: center
+  min-height: 400px
+  height: 90vh
+
+  .container
+    +pie-clearfix
+    +box-sizing(border-box)
+
+  .action-section-content
+    position: absolute
+    left: 0
+    right: 0
+    top: 40%
+    +translateY(-50%)
+
+  .share, .download
+    display: block
+    max-width: 240px
+    margin: 0 auto 12px
+    padding: 12px 36px
+    width: 100%
+
+  .icon-facebook, .icon-download-icon
+    // margin-bottom: 6px
+    font-size: 24px
+    vertical-align: middle
+    margin-right: 6px
+
+  .copyright
+    position: absolute
+    width: 100%
+    left: 0
+    bottom: 0
+    +trailer(1)
+    +adjust-font-size-to(15px)
+
+
+  +at-breakpoint($pad)
+    padding: 144px 0
+    height: 60vh
+
+    // .btn-team
+    //   width: 448px
+
+    .share, .download
+      display: inline-block
+      margin: 0 6px
+
+    .copyright
+      +trailer(2)
+
