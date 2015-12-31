@@ -1,0 +1,77 @@
+.editor
+  .container
+    / #generator
+    .editor-row
+      / upload-image
+      .upload-image
+        .upload-image-row
+          a.btn.btn_primary.uploadBtn 上傳圖片
+        .upload-image-row
+          a.btn.btn_primary 匯入臉書頭像
+
+      / preview
+      .preview
+        .preview-image
+          #userimage
+            .inner style="background-image: url(images/sample.jpg)"
+          #coverimage
+            .inner style="background-image: url(images/object/1.png)"
+            #dragger
+          #dragger-border
+          #loading
+            .drop
+              img src="images/loading.gif"
+        #size-slider
+          span.zoomin ＋
+          span.zoomout －
+
+    .editor-row
+      .templates#templates data-toggle="buttons"
+        label.template-label.btn.btn-default.active style="background-image: url(images/sample.jpg);"
+          img src="images/object/1.png"
+          input autocomplete="off" checked="checked" name="template" type="radio" value="1"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/2.png"
+          input autocomplete="off" name="template" type="radio" value="2"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/3.png"
+          input autocomplete="off" name="template" type="radio" value="3"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/4.png"
+          input autocomplete="off" name="template" type="radio" value="4"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/5.png"
+          input autocomplete="off" name="template" type="radio" value="5"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/6.png"
+          input autocomplete="off" name="template" type="radio" value="6"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/7.png"
+          input autocomplete="off" name="template" type="radio" value="7"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/8.png"
+          input autocomplete="off" name="template" type="radio" value="8"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/9.png"
+          input autocomplete="off" name="template" type="radio" value="9"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/10.png"
+          input autocomplete="off" name="template" type="radio" value="10"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/11.png"
+          input autocomplete="off" name="template" type="radio" value="11"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/12.png"
+          input autocomplete="off" name="template" type="radio" value="12"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/13.png"
+          input autocomplete="off" name="template" type="radio" value="13"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/14.png"
+          input autocomplete="off" name="template" type="radio" value="14"
+        label.template-label.btn.btn-default style="background-image: url(images/sample.jpg);"
+          img src="images/object/15.png"
+          input autocomplete="off" name="template" type="radio" value="15"
+
+      .finish-editor
+        a.btn.btn_primary href="#" 完成編輯

@@ -1,0 +1,242 @@
+.editor {
+
+  @include padding-leader(1);
+
+  .upload-image {
+    @include pie-clearfix;
+    margin: 0 -3px rhythm(1);
+    text-align: center;
+    .upload-image-row {
+      @include box-sizing(border-box);
+      padding: 0 3px;
+      width: 50%;
+      display: inline-block;
+    }
+    .btn {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      padding: 3px 6px;
+    }
+  }
+
+  .preview {
+    @include trailer(0.5);
+  }
+
+  .preview-image {
+    position: relative;
+    max-width: 360px;
+    @include box-sizing(border-box);
+    width: 80%;
+    margin: 0 auto rhythm(0.5);
+    border: 5px solid rgba(white, 0.5);
+    overflow: hidden;
+    &:after {
+      z-index: -1;
+      content: "";
+      display: block;
+      padding-top: 100%;
+    }
+  }
+
+  #userimage,
+  #coverimage {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto auto;
+    .inner {
+      width: 100%;
+      padding-top: 100%;
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      background-position: 50% 50%;
+    }
+  }
+  #coverimage {
+    overflow: hidden;
+  }
+  #dragger {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    cursor: move;
+  }
+  #size-slider {
+    @include border-radius(0px);
+    height: 24px;
+    background: transparent;
+    border: none;
+    position: relative;
+    margin: 0 24px;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      margin-top: -1px;
+      left: 0px;
+      right: 0px;
+      height: 2px;
+      background-color: rgba(white, 0.5);
+    }
+
+    .ui-state-default,
+    .ui-widget-content .ui-state-default,
+    .ui-widget-header .ui-state-default {
+      top: 50%;
+      margin-top: -3px;
+      outline: none;
+      width: 24px;
+      height: 6px;
+      background: $color-primary;
+      opacity: 1;
+      border: 0px solid transparent;
+      @include border-radius(15px);
+      cursor: pointer;
+    }
+    .ui-slider-handle {
+      top: 50%;
+      margin-top: -3px;
+      margin-left: -12px;
+    }
+    .zoomin {
+      color: $color-primary;
+      position: absolute;
+      right: -24px;
+    }
+    .zoomout {
+      color: $color-primary;
+      position: absolute;
+      left: -24px;
+    }
+  }
+  #userimage .inner {
+    background-color: #CCCCCC;
+  }
+  #loading {
+    position: absolute;
+    top:0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+
+    div {
+      position: relative;
+      width:100%;
+      height: 100%;
+    }
+    img {
+      width: 43px;
+      height: 11px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -5px;
+      margin-left: -21px;
+    }
+  }
+
+  .templates {
+    background-color: darken(#183840, 5%);
+    margin: 0 -24px rhythm(1);
+    padding: 12px 9px;
+    @include nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    .btn {
+      position: relative;
+      display: inline-block;
+      margin: 0 3px;
+      padding: 0;
+      border: none;
+      background-size: cover;
+      background-position: center;
+      width: 20%;
+      @include border-radius(0px);
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        border: 2px solid transparent;
+        @include transition(border 0.5s);
+      }
+      &:hover:before {
+        border: 2px solid rgba(white, 0.25);
+      }
+      &.active:before {
+        border: 2px solid rgba(white, 0.85);
+      }
+
+    }
+    img {
+      width: 100%;
+      @include trailer(0);
+    }
+  }
+
+  .finish-editor {
+    text-align: center;
+    padding: 4px 36px;
+  }
+
+
+  @include at-breakpoint($pad) {
+    @include pie-clearfix;
+    @include padding-leader(2);
+
+    .editor-row {
+      display: inline-block;
+      width: 50%;
+      position: relative;
+      padding: 0 24px;
+      vertical-align: top;
+    }
+
+    .preview-image {
+      @include trailer(1);
+    }
+
+    .templates {
+      background-color: transparent;
+      margin: auto;
+      padding: 0;
+      white-space: normal;
+      overflow-x: auto;
+      overflow-y: auto;
+      margin-right: -6px;
+      margin-bottom: 24px;
+      .btn {
+        position: relative;
+        display: inline-block;
+        margin: 0;
+        width: 25%;
+        border-right: 6px solid #183840;
+        border-bottom: 6px solid #183840;
+      }
+    }
+
+    .finish-editor {
+      @include pie-clearfix;
+      .btn {
+        float: right;
+      }
+    }
+  }
+
+
+}
