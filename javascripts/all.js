@@ -53,9 +53,9 @@ $(document).ready(function() {
     min: 100,
     slide: function(event, ui) {
       var
-      truesize = getBackgroundSize($userimage.css('background-size')),
-      position = getBackgroundPosition($userimage.css('background-position')),
-      center = getBackgroundCenterPoint(truesize,position);
+      truesize = $util.getBackgroundSize($userimage.css('background-size')),
+      position = $util.getBackgroundPosition($userimage.css('background-position')),
+      center = $util.getBackgroundCenterPoint(truesize,position);
       previewSize = $('.preview-image').outerHeight(true) / 1000;
       $('<img/>').attr('src',getBackgroundImage($userimage))
       .load(function() {
@@ -118,20 +118,7 @@ $(document).ready(function() {
   });
 
   $("#normalSubmit").click(function() {
-    var
-    basesize = $userimage.width(),
-    size = getBackgroundSize($userimage.css('background-size')),
-    position = getBackgroundPosition($userimage.css('background-position')),
-    scale = basesize/500;
-
-    var
-    template = $('input[name=template]:checked').val(),
-    source = $('#source').val(),
-    w = size[0]/scale,
-    h = size[1]/scale,
-    x = position[0]/scale,
-    y = position[1]/scale;
-    createImage(template,source,x,y,w,h);
+    downloadImage();
   });
 });
 // $(window).konami({
@@ -153,7 +140,21 @@ $(document).ready(function() {
 //   }
 // });
 
-function createImage(template,source,x,y,w,h){
+window.getBase64 = function() {
+  var
+  basesize = $userimage.width(),
+  size = $util.getBackgroundSize($userimage.css('background-size')),
+  position = $util.getBackgroundPosition($userimage.css('background-position')),
+  scale = basesize/500;
+
+  var
+  template = $('input[name=template]:checked').val(),
+  source = $('#source').val(),
+  w = size[0]/scale,
+  h = size[1]/scale,
+  x = position[0]/scale,
+  y = position[1]/scale;
+
   var cover = new Image();
   cover.src = 'images/object/'+template+'.png';
 
@@ -163,7 +164,6 @@ function createImage(template,source,x,y,w,h){
   var resize_canvas = document.getElementById("result");
   resize_canvas.width = 500;
   resize_canvas.height = 500;
-
   var ctx = resize_canvas.getContext("2d");
   ctx.rect(0,0,500,500);
   ctx.fillStyle="#CCCCCC";
@@ -171,7 +171,11 @@ function createImage(template,source,x,y,w,h){
   ctx.drawImage(userimage,x,y,w,h);
   ctx.drawImage(cover,0,0,500,500);
 
-  var base64 = resize_canvas.toDataURL("image/png");
+  return resize_canvas.toDataURL("image/png");
+}
+
+function downloadImage(){
+  var base64 = getBase64()
 
   // check ie or not
   var ua = window.navigator.userAgent;
@@ -352,22 +356,6 @@ function resizeDragger(size,wrapper,value,upload,init)
   //   .css('background-size',width+'px '+height+'px')
   //   .css('background-position',left+'px '+top+'px');
   return [width, height, left, top]
-}
-function getBackgroundSize(string)
-{
-  size = string.split(' ');
-  return [px2int(size[0]),px2int(size[1])];
-}
-function getBackgroundPosition(string)
-{
-  position = string.split(' ');
-  return [px2int(position[0]),px2int(position[1])];
-}
-function getBackgroundCenterPoint(size,position){
-  return [size[0]*0.5 + position[0],size[1]*0.5 + position[1]]
-}
-function px2int(string){
-  return parseFloat(string.replace('px',''));
 }
 
 // 沒有圖片上傳時的預設圖片處理 function，目的是讓預設圖片也可以被下載

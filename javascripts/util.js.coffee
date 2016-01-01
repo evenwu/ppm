@@ -12,4 +12,20 @@ class Util
 
     xhr.send()
 
+  getBackgroundSize: (string)->
+    size = string.split(' ');
+    [pix2int(size[0]), pix2int(size[1])];
+
+  getBackgroundPosition: (string)->
+    position = string.split(' ');
+    [pix2int(position[0]), pix2int(position[1])];
+
+  getBackgroundCenterPoint: (size, position)->
+    [size[0]*0.5 + position[0],size[1]*0.5 + position[1]]
+
+  # private methods
+
+  pix2int = (string)->
+    parseFloat(string.replace('px',''));
+
 window.$util = new Util()
