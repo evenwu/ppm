@@ -204,7 +204,9 @@ $(function(){
   });
   $('#uploadInput').on('change',function(){
     input = document.getElementById('uploadInput');
-    loadImage(input.files);
+    if(input.files[0]) {
+      loadImage(input.files);
+    }
   });
 });
 
@@ -241,10 +243,24 @@ window.loadImage = function(files) {
   }
   function imageLoaded() {
     var canvas = document.getElementById("canvas")
-    canvas.width = $originSize;
-    canvas.height = $originSize;
+    if( this.width > this.height) {
+      sx = (this.width - this.height) / 2
+      sy = 0
+      imgW = this.height
+      imgH = this.height
+    } else if( this.width < this.height) {
+      sx = 0
+      sy = (this.height - this.width) / 2
+      imgW = this.width
+      imgH = this.width
+    } else { // width == height
+      sx = 0
+      sy = 0
+      imgW = this.width
+      imgH = this.height
+    }
     var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, $originSize, $originSize);
+    ctx.drawImage(img, sx, sy, imgW, imgH, 0, 0, $originSize, $originSize);
     var base64 = canvas.toDataURL("image/png");
 
     $('#source').attr('value',base64);
