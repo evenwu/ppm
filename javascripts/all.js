@@ -17,7 +17,7 @@ function resetUserImage(pos) {
 $(window).load(function() {
   var
   container_size = $userimage.width(),
-  userimage_size = getImgSize(getBackgroundImage($userimage));
+  userimage_size = $util.getImgSize($util.getBackgroundImageUrl($userimage));
   pos = resizeDragger(userimage_size,container_size);
   nonImageLoadState();
   resetUserImage(pos)
@@ -57,7 +57,7 @@ $(document).ready(function() {
       position = $util.getBackgroundPosition($userimage.css('background-position')),
       center = $util.getBackgroundCenterPoint(truesize,position);
       previewSize = $('.preview-image').outerHeight(true) / 1000;
-      $('<img/>').attr('src',getBackgroundImage($userimage))
+      $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
       .load(function() {
         var
         size = [this.width,this.height],
@@ -108,7 +108,7 @@ $(document).ready(function() {
     if($userimage.hasClass('dragged') == true) $userimage.attr('class', 'inner dragged');
     else $userimage.attr('class', 'inner');
 
-    $('<img/>').attr('src',getBackgroundImage($userimage))
+    $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
     .load(function() {
       var
       size = [this.width,this.height],
@@ -283,17 +283,6 @@ window.loadImage = function(files) {
     });
   }
 }
-function getImgSize(src)
-{
-  var newImg = new Image();
-  newImg.src = src;
-  return [newImg.width, newImg.height];
-}
-function getBackgroundImage(element)
-{
-  var url = element.css('background-image');
-  return url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-}
 function resizeDragger(size,wrapper,value,upload,init)
 {
   value = typeof value !== 'undefined' ? value : 1;
@@ -377,7 +366,3 @@ function nonImageLoadState() {
 
 // smooth-scroll-link
 $('.smooth-scroll-link').smoothScroll();
-
-window.xx = function(v) {
-  console.log(v)
-}

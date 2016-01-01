@@ -23,9 +23,20 @@ class Util
   getBackgroundCenterPoint: (size, position)->
     [size[0]*0.5 + position[0],size[1]*0.5 + position[1]]
 
-  # private methods
+  getImgSize: (src)->
+    newImg = new Image();
+    newImg.src = src;
+    [newImg.width, newImg.height]
+
+  getBackgroundImageUrl: (element)->
+    url = element.css('background-image')
+    url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '')
 
   pix2int = (string)->
     parseFloat(string.replace('px',''));
 
 window.$util = new Util()
+
+window.xx = (v)->
+  console.log(v)
+
