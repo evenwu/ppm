@@ -16,7 +16,6 @@ window.$fb =
     $('body').addClass('fb-connected')
   afterUserPictureLoaded: ->
     # callback code here
-  sample: 'http://assets.staging.iing.tw/badges/659dade0ea0d3a0a9e9e5c05fe3c71e6'
 
 ((d, s, id) ->
   js = undefined
@@ -71,14 +70,15 @@ class Facebook
       xx(response)
     ), scope: $fb.perms
   uploadPicture: ->
-    xx(getBase64())
-    FB.api '/me/photos', 'post', (
-      access_token: $fb.token
-      url: $fb.sample
-      caption: "http://iing.tw"
-    ), (response)->
-      if response.id
-        url = "https://m.facebook.com/photo.php?fbid=" + response.id + "&prof=1"
-        window.open(url, "", "width=550, height=460, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
+    endpoing = "http://staging.iing.tw/badges.json"
+    $.post endpoing, { data: getBase64() }, (result)->
+      FB.api '/me/photos', 'post', (
+        access_token: $fb.token
+        url: result.url
+        caption: "http://iing.tw"
+      ), (response)->
+        if response.id
+          url = "https://m.facebook.com/photo.php?fbid=" + response.id + "&prof=1"
+          window.open(url, "", "width=550, height=460, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
 
 window.$facebook = new Facebook()
