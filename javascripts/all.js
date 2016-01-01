@@ -49,23 +49,21 @@ $(document).ready(function() {
   // size slider
   $sizer.slider({
     value: 100,
-    max: 300,
+    max: 200,
     min: 100,
     slide: function(event, ui) {
       var
       truesize = $util.getBackgroundSize($userimage.css('background-size')),
       position = $util.getBackgroundPosition($userimage.css('background-position')),
       center = $util.getBackgroundCenterPoint(truesize,position);
-      previewSize = $('.preview-image').outerHeight(true) / 1000;
       $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
       .load(function() {
         var
         size = [this.width,this.height],
-        width = size[0]*(ui.value)/100*previewSize,
-        height = size[1]*(ui.value)/100*previewSize,
+        width = size[0]*(ui.value)/100,
+        height = size[1]*(ui.value)/100,
         left = center[0] - width*0.5,
         top = center[1] - height*0.5;
-
         if(top > 0){
           top = 0
         } else if(top + height < $originSize) {
@@ -353,10 +351,10 @@ function nonImageLoadState() {
   dftImage.src = "/images/sample.jpg";
   function drawDftImage(dftImage) {
     var dftcv = document.getElementById("canvas");
-    dftcv.width = dftImage.width;
-    dftcv.height = dftImage.height;
+    dftcv.width = $originSize;
+    dftcv.height = $originSize;
     var dftctx = dftcv.getContext("2d");
-    dftctx.drawImage(dftImage, 0, 0);
+    dftctx.drawImage(dftImage, 0, 0, dftImage.width, dftImage.height, 0, 0, $originSize, $originSize);
     var dftimgbase64 = dftcv.toDataURL("image/png");
     $('#source').attr('value',dftimgbase64);
     $userimage.css('background-image','url('+dftimgbase64+')');
