@@ -8,14 +8,29 @@ window.$fb =
   userID: null
   picture: null
   perms: "public_profile,user_photos"
+  # 本機開發請用 267188576687915
   appId: '267188576687915'
+  # 檢查到有登入且有授權後
   afterLogin: (response)->
     $fb.token  = response.authResponse.accessToken
     $fb.userID = response.authResponse.userID;
     $facebook.getUserPicture()
     $('body').addClass('fb-connected')
+  # 檢查到沒登入、或有登入沒授權
+  notLogin: ->
+    $('body').addClass('no-fb')
+  # 開始檢查是否有登入和授權
+  beforeGetLoginStatus: ->
+    $('body').addClass('fb-get-login-status')
+  # 結束檢查是否有登入和授權
+  afterGetLoginStatus: ->
+    $('body').removeClass('fb-get-login-status')
+  # 檢查到有授權後，開始抓臉書頭像
+  beforeUserPictureLoaded: ->
+    $('body').addClass('fb-get-picture')
+  # 已抓到臉書頭像
   afterUserPictureLoaded: ->
-    # callback code here
+    $('body').removeClass('fb-get-picture')
 
 ((d, s, id) ->
   js = undefined
@@ -49,6 +64,7 @@ window.fbAsyncInit = ->
 
 class Facebook
   getUserPicture: ->
+    $fb.beforeUserPictureLoaded()
     url = "/" + $fb.userID + "/picture?width=500&height=500"
     FB.api url, (result)->
       $fb.picture = result.data.url
@@ -56,14 +72,16 @@ class Facebook
         loadImage [blob]
         $fb.afterUserPictureLoaded()
   getLoginStatus: ->
+    $fb.beforeGetLoginStatus()
     FB.getLoginStatus (response) ->
       status = response.status
       if status == 'connected'
         $fb.afterLogin(response)
       else if status == 'not_authorized'
-        # options['not_connected'](response)
+        $fb.notLogin()
       else
-        # options['not_connected'](response)
+        $fb.notLogin()
+      $fb.afterGetLoginStatus()
   dialogLogin: (callback)->
     FB.login ((response)->
       callback(response)
