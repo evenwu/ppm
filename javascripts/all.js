@@ -6,6 +6,7 @@ $draggerBorder = $('#dragger-border'),
 $sizer = $('#size-slider'),
 $loading = $('#loading');
 $uploading = $('#uploading');
+var $originSize = $coverimage.width();
 
 function resetUserImage(pos) {
   $userimage
@@ -16,7 +17,7 @@ function resetUserImage(pos) {
 $(window).load(function() {
   var
   container_size = $userimage.width(),
-  userimage_size = getImgSize(getBackgroundImage($userimage));
+  userimage_size = $util.getImgSize($util.getBackgroundImageUrl($userimage));
   pos = resizeDragger(userimage_size,container_size);
   nonImageLoadState();
   resetUserImage(pos)
@@ -48,22 +49,31 @@ $(document).ready(function() {
   // size slider
   $sizer.slider({
     value: 100,
-    max: 300,
+    max: 200,
     min: 100,
     slide: function(event, ui) {
       var
-      truesize = getBackgroundSize($userimage.css('background-size')),
-      position = getBackgroundPosition($userimage.css('background-position')),
-      center = getBackgroundCenterPoint(truesize,position);
-      previewSize = $('.preview-image').outerHeight(true) / 1000;
-      $('<img/>').attr('src',getBackgroundImage($userimage))
+      truesize = $util.getBackgroundSize($userimage.css('background-size')),
+      position = $util.getBackgroundPosition($userimage.css('background-position')),
+      center = $util.getBackgroundCenterPoint(truesize,position);
+      $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
       .load(function() {
         var
         size = [this.width,this.height],
-        width = size[0]*(ui.value)/100*previewSize,
-        height = size[1]*(ui.value)/100*previewSize,
+        width = size[0]*(ui.value)/100,
+        height = size[1]*(ui.value)/100,
         left = center[0] - width*0.5,
         top = center[1] - height*0.5;
+        if(top > 0){
+          top = 0
+        } else if(top + height < $originSize) {
+          top = $originSize - height
+        }
+        if(left > 0){
+          left = 0;
+        } else if(left + width < $originSize){
+          left = $originSize - width
+        }
         $dragger
           .css('width',width+'px').css('height',height+'px')
           .css('top',top+'px').css('left',left+'px');
@@ -96,7 +106,7 @@ $(document).ready(function() {
     if($userimage.hasClass('dragged') == true) $userimage.attr('class', 'inner dragged');
     else $userimage.attr('class', 'inner');
 
-    $('<img/>').attr('src',getBackgroundImage($userimage))
+    $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
     .load(function() {
       var
       size = [this.width,this.height],
@@ -106,20 +116,7 @@ $(document).ready(function() {
   });
 
   $("#normalSubmit").click(function() {
-    var
-    basesize = $userimage.width(),
-    size = getBackgroundSize($userimage.css('background-size')),
-    position = getBackgroundPosition($userimage.css('background-position')),
-    scale = basesize/500;
-
-    var
-    template = $('input[name=template]:checked').val(),
-    source = $('#source').val(),
-    w = size[0]/scale,
-    h = size[1]/scale,
-    x = position[0]/scale,
-    y = position[1]/scale;
-    createImage(template,source,x,y,w,h);
+    downloadImage();
   });
 });
 // $(window).konami({
@@ -141,7 +138,21 @@ $(document).ready(function() {
 //   }
 // });
 
-function createImage(template,source,x,y,w,h){
+window.getBase64 = function() {
+  var
+  basesize = $userimage.width(),
+  size = $util.getBackgroundSize($userimage.css('background-size')),
+  position = $util.getBackgroundPosition($userimage.css('background-position')),
+  scale = basesize/500;
+
+  var
+  template = $('input[name=template]:checked').val(),
+  source = $('#source').val(),
+  w = size[0]/scale,
+  h = size[1]/scale,
+  x = position[0]/scale,
+  y = position[1]/scale;
+
   var cover = new Image();
   cover.src = 'images/object/'+template+'.png';
 
@@ -151,7 +162,6 @@ function createImage(template,source,x,y,w,h){
   var resize_canvas = document.getElementById("result");
   resize_canvas.width = 500;
   resize_canvas.height = 500;
-
   var ctx = resize_canvas.getContext("2d");
   ctx.rect(0,0,500,500);
   ctx.fillStyle="#CCCCCC";
@@ -159,7 +169,11 @@ function createImage(template,source,x,y,w,h){
   ctx.drawImage(userimage,x,y,w,h);
   ctx.drawImage(cover,0,0,500,500);
 
-  var base64 = resize_canvas.toDataURL("image/png");
+  return resize_canvas.toDataURL("image/png");
+}
+
+function downloadImage(){
+  var base64 = getBase64()
 
   // check ie or not
   var ua = window.navigator.userAgent;
@@ -190,7 +204,9 @@ $(function(){
   });
   $('#uploadInput').on('change',function(){
     input = document.getElementById('uploadInput');
-    loadImage(input.files);
+    if(input.files[0]) {
+      loadImage(input.files);
+    }
   });
 });
 
@@ -208,7 +224,7 @@ function handleDragOver(evt) {
 }
 
 // function
-function loadImage(files) {
+window.loadImage = function(files) {
   var file, fr, img;
   if (!files) {
     alert('悲劇！您的瀏覽器不支援檔案上傳！')
@@ -227,10 +243,24 @@ function loadImage(files) {
   }
   function imageLoaded() {
     var canvas = document.getElementById("canvas")
-    canvas.width = img.width;
-    canvas.height = img.height;
+    if( this.width > this.height) {
+      sx = (this.width - this.height) / 2
+      sy = 0
+      imgW = this.height
+      imgH = this.height
+    } else if( this.width < this.height) {
+      sx = 0
+      sy = (this.height - this.width) / 2
+      imgW = this.width
+      imgH = this.width
+    } else { // width == height
+      sx = 0
+      sy = 0
+      imgW = this.width
+      imgH = this.height
+    }
     var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
+    ctx.drawImage(img, sx, sy, imgW, imgH, 0, 0, $originSize, $originSize);
     var base64 = canvas.toDataURL("image/png");
 
     $('#source').attr('value',base64);
@@ -258,7 +288,7 @@ function loadImage(files) {
       var
       value = $('input[name=template]:checked').val(),
       container_size = $userimage.width(),
-      userimage_size = [this.width,this.height];
+      userimage_size = [$originSize, $originSize];
       pos = resizeDragger(userimage_size, container_size,value);
       resetUserImage(pos)
 
@@ -266,17 +296,6 @@ function loadImage(files) {
       $uploading.fadeOut();
     });
   }
-}
-function getImgSize(src)
-{
-  var newImg = new Image();
-  newImg.src = src;
-  return [newImg.width, newImg.height];
-}
-function getBackgroundImage(element)
-{
-  var url = element.css('background-image');
-  return url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
 }
 function resizeDragger(size,wrapper,value,upload,init)
 {
@@ -333,7 +352,6 @@ function resizeDragger(size,wrapper,value,upload,init)
       // left = (wrapper-width)*0.5;
   //   }
   // }
-
   $dragger
     .css('width',width+'px').css('height',height+'px')
     .css('top',top+'px').css('left',left+'px');
@@ -342,22 +360,6 @@ function resizeDragger(size,wrapper,value,upload,init)
   //   .css('background-position',left+'px '+top+'px');
   return [width, height, left, top]
 }
-function getBackgroundSize(string)
-{
-  size = string.split(' ');
-  return [px2int(size[0]),px2int(size[1])];
-}
-function getBackgroundPosition(string)
-{
-  position = string.split(' ');
-  return [px2int(position[0]),px2int(position[1])];
-}
-function getBackgroundCenterPoint(size,position){
-  return [size[0]*0.5 + position[0],size[1]*0.5 + position[1]]
-}
-function px2int(string){
-  return parseFloat(string.replace('px',''));
-}
 
 // 沒有圖片上傳時的預設圖片處理 function，目的是讓預設圖片也可以被下載
 function nonImageLoadState() {
@@ -365,10 +367,10 @@ function nonImageLoadState() {
   dftImage.src = "/images/sample.jpg";
   function drawDftImage(dftImage) {
     var dftcv = document.getElementById("canvas");
-    dftcv.width = dftImage.width;
-    dftcv.height = dftImage.height;
+    dftcv.width = $originSize;
+    dftcv.height = $originSize;
     var dftctx = dftcv.getContext("2d");
-    dftctx.drawImage(dftImage, 0, 0);
+    dftctx.drawImage(dftImage, 0, 0, dftImage.width, dftImage.height, 0, 0, $originSize, $originSize);
     var dftimgbase64 = dftcv.toDataURL("image/png");
     $('#source').attr('value',dftimgbase64);
     $userimage.css('background-image','url('+dftimgbase64+')');
