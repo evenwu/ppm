@@ -9,23 +9,23 @@
   .container
     +pie-clearfix
     +box-sizing(border-box)
-
-  .action-section-content
     position: absolute
     left: 0
     right: 0
     top: 40%
     +translateY(-50%)
 
-  .share, .download
+  .tip
+    +adjust-font-size-to(18px)
+
+  .btn
     display: block
     max-width: 240px
     margin: 0 auto 12px
-    padding: 12px 36px
+    padding 9px 24px
     width: 100%
 
   .icon-facebook, .icon-download-icon
-    // margin-bottom: 6px
     font-size: 24px
     vertical-align: middle
     margin-right: 6px
@@ -38,18 +38,13 @@
     +trailer(1)
     +adjust-font-size-to(15px)
 
-
   +at-breakpoint($pad)
     padding: 144px 0
     height: 60vh
 
-    // .btn-team
-    //   width: 448px
-
-    .share, .download
+    .btn
       display: inline-block
       margin: 0 6px
 
     .copyright
       +trailer(2)
-

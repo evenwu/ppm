@@ -40,7 +40,7 @@
     color: #fff;
   }
   .logo {
-    color: $white;
+    color: $color-white;
     font-size: 20px;
     font-weight: 700;
   }
@@ -52,14 +52,14 @@
   }
   .nav .caret,
   .nav a:hover .caret {
-    border-top-color: $white;
-    border-bottom-color: $white;
+    border-top-color: $color-white;
+    border-bottom-color: $color-white;
   }
   .nav .open > a .caret,
   .nav .open > a:hover .caret,
   .nav .open > a:focus .caret {
-    border-top-color: $white;
-    border-bottom-color: $white;
+    border-top-color: $color-white;
+    border-bottom-color: $color-white;
   }
 
   @include at-breakpoint($pad) {

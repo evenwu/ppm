@@ -64,6 +64,23 @@
   }
 }
 
+.btn_secondary {
+  color: white;
+  border-color: $color-secondary;
+  background-color: $color-secondary;
+  &:hover, &:focus {
+    color: white;
+    border-color: darken($color-secondary, 5%);
+    background-color: darken($color-secondary, 5%);
+  }
+  &:disabled , &.is-disabled {
+    cursor: default;
+    color: $color-gray;
+    border-color: $color-gray-light;
+    background-color: $color-gray-light;
+  }
+}
+
 .btn_primary-dark {
   color: white;
   border-color: #2B6F69;
@@ -89,6 +106,24 @@
     color: white;
     border-color: $color-red-dark;
     background-color: $color-red-dark;
+  }
+  &:disabled , &.is-disabled {
+    cursor: default;
+    color: $color-gray;
+    border-color: $color-gray-light;
+    background-color: $color-gray-light;
+  }
+}
+
+
+.btn_facebook {
+  color: white;
+  border-color: $facebook-blue;
+  background-color: $facebook-blue;
+  &:hover, &:focus {
+    color: white;
+    border-color: darken($facebook-blue, 5%);
+    background-color: darken($facebook-blue, 5%);
   }
   &:disabled , &.is-disabled {
     cursor: default;
