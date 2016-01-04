@@ -15,6 +15,10 @@ function resetUserImage(pos) {
     .css('background-position',pos[2]+'px '+pos[3]+'px');
 }
 
+function changeSizerValue(value) {
+  $sizer.slider('value', value)
+}
+
 $(window).load(function() {
   var
   container_size = $userimage.width(),
@@ -208,7 +212,7 @@ $(function(){
     input = document.getElementById('uploadInput');
     if(input.files[0]) {
       loadImage(input.files);
-      $sizer.slider('value', '100')
+      changeSizerValue(100)
     }
   });
 });
@@ -381,6 +385,13 @@ function nonImageLoadState() {
       css('background-size', value)
   }
   drawDftImage(dftImage);
+}
+
+window.onresize = function(e) {
+  $originSize = $coverimage.width()
+  resizeDragger($originSize, $originSize)
+  resetUserImage([$originSize, $originSize, 0, 0])
+  changeSizerValue(100)
 }
 
 // smooth-scroll-link

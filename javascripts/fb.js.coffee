@@ -99,7 +99,7 @@ class Facebook
     ), (response)->
       xx(response.id)
   uploadPicture: ->
-    endpoing = "http://staging.iing.tw/badges.json"
+    endpoing = "http://iing.tw/badges.json"
     $.post endpoing, { data: getBase64() }, (result)->
       $facebook.publishPost(result.url)
       FB.api '/me/photos', 'post', (
