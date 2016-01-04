@@ -21,18 +21,34 @@
 @import "partials/editor-section";
 @import "partials/action-section";
 
-// #formbuttons {
-//   margin-top: 6em;
-// }
+// ==== inbox ====
+.hide-phone {
+  display: none;
+  @include at-breakpoint($pad) {
+    display: block;
+  }
+}
 
-// #normalSubmit {
-//   padding: 0;
-//   margin: 0;
-//   border: none;
-//   background-color: transparent;
-//   color: white;
-//   border-bottom: 2px solid white;
-//   font-size: 24px;
-//   font-weight: normal;
-//   line-height: 1.3;
-// }
+.hide-mobile {
+  display: none;
+  @include at-breakpoint($desktop) {
+    display: block;
+  }
+}
+
+br.word-break-on-phone {
+  @include at-breakpoint($pad) {
+    display: none;
+  }
+}
+
+br.word-break-on-mobile {
+  @include at-breakpoint(desktop) {
+    display: none;
+  }
+}
+
+.word-no-break {
+  display: inline-block;
+  @include nowrap;
+}
