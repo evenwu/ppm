@@ -69,16 +69,24 @@ $(document).ready(function() {
         height = size[1]*(ui.value)/100,
         left = center[0] - width*0.5,
         top = center[1] - height*0.5;
-        if(top > 0){
-          top = 0
-        } else if(top + height < $originSize) {
-          top = $originSize - height
-        }
-        if(left > 0){
-          left = 0;
-        } else if(left + width < $originSize){
-          left = $originSize - width
-        }
+
+        // 強制把圖放回中間
+        left = 0 - ((width - $originSize) / 2)
+        top = 0 - ((height - $originSize) / 2)
+
+        // 以下是針對四個角在 resize 時做調整，避免圖在縮小時跑到邊界外 XD
+        //   但後來決定 resize 直接強制把圖放回中間，所以就註解了
+        // if(top > 0){
+        //   top = 0
+        // } else if(top + height < $originSize) {
+        //   top = $originSize - height
+        // }
+        // if(left > 0){
+        //   left = 0;
+        // } else if(left + width < $originSize){
+        //   left = $originSize - width
+        // }
+
         $dragger
           .css('width',width+'px').css('height',height+'px')
           .css('top',top+'px').css('left',left+'px');
