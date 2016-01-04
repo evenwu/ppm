@@ -207,6 +207,7 @@ $(function(){
     input = document.getElementById('uploadInput');
     if(input.files[0]) {
       loadImage(input.files);
+      $sizer.slider('value', '100')
     }
   });
 });
