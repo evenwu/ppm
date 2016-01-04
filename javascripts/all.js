@@ -184,9 +184,9 @@ function downloadImage(){
     var tab=window.open();
     tab.document.write(html);
   } else {
-    base64 = base64.replace("image/png", "image/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=iing-no-2.png;")
+    base64 = base64.replace("image/png", "image/png;headers=Content-Disposition%3A%20attachment%3B%20filename=iing-no-2.png;")
     $('#download').attr('href',base64);
-    console.log(base64)
+    // console.log(base64)
     $('#download').attr('download', "iing-no-2.png");
     $('#download').attr('target', "_blank");
     $('#download')[0].click();
