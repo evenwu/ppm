@@ -21,6 +21,11 @@ $page-container: ".container";
 body {
   // background-color: #183840;
   background-color: #f7f7f7;
+  // background-image: url('/images/img-big.png');
+  // background-repeat: repeat-y;
+  // background-position: top center;
+  // @include background-size(cover);
+  // background-attachment: fixed;
 }
 
 .container {
