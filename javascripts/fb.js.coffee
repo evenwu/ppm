@@ -7,9 +7,10 @@ window.$fb =
   token: null
   userID: null
   picture: null
-  perms: "public_profile,user_photos"
+  perms: "public_profile,user_photos,publish_actions"
   # 本機開發請用 267188576687915
-  appId: '267188576687915'
+  appId: '1476442785996284'
+  shareCapition: 'http://2.iing.tw'
   # 檢查到有登入且有授權後
   afterLogin: (response)->
     $fb.token  = response.authResponse.accessToken
@@ -85,7 +86,6 @@ class Facebook
   dialogLogin: (callback)->
     FB.login ((response)->
       callback(response)
-      xx(response)
     ), scope: $fb.perms
   uploadPicture: ->
     endpoing = "http://staging.iing.tw/badges.json"
@@ -93,7 +93,7 @@ class Facebook
       FB.api '/me/photos', 'post', (
         access_token: $fb.token
         url: result.url
-        caption: "http://iing.tw"
+        caption: $fb.shareCapition
       ), (response)->
         if response.id
           url = "https://m.facebook.com/photo.php?fbid=" + response.id + "&prof=1"
