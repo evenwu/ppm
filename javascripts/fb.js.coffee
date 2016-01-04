@@ -12,7 +12,7 @@ window.$fb =
   picture: null
   perms: "public_profile,user_photos,publish_actions"
   appId: fbappid
-  shareCapition: 'http://2.iing.tw'
+  shareCapition: '' # 不要幫 user 下文案
   # 網頁 load 完後想要做啥
   afterPageLoad: ->
     # $facebook.getLoginStatus() # 先取消自動抓 fb 頭像
@@ -92,9 +92,16 @@ class Facebook
     FB.login ((response)->
       callback(response)
     ), scope: $fb.perms
+  publishPost: (imgurl)->
+    FB.api '/me/feed', 'post', (
+      link: 'http://2.iing.tw'
+      picture: imgurl
+    ), (response)->
+      xx(response.id)
   uploadPicture: ->
     endpoing = "http://staging.iing.tw/badges.json"
     $.post endpoing, { data: getBase64() }, (result)->
+      $facebook.publishPost(result.url)
       FB.api '/me/photos', 'post', (
         access_token: $fb.token
         url: result.url
