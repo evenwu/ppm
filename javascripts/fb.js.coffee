@@ -3,14 +3,19 @@
 # $facebook
 #   call methods for access fb
 
+# 本機開發請用 267188576687915
+# 正式主機請用 1476442785996284
+fbappid = if location.href.indexOf("iing.tw") >= 0 then '1476442785996284' else '267188576687915'
 window.$fb =
   token: null
   userID: null
   picture: null
   perms: "public_profile,user_photos,publish_actions"
-  # 本機開發請用 267188576687915
-  appId: '1476442785996284'
+  appId: fbappid
   shareCapition: 'http://2.iing.tw'
+  # 網頁 load 完後想要做啥
+  afterPageLoad: ->
+    # $facebook.getLoginStatus() # 先取消自動抓 fb 頭像
   # 檢查到有登入且有授權後
   afterLogin: (response)->
     $fb.token  = response.authResponse.accessToken
@@ -51,7 +56,7 @@ window.fbAsyncInit = ->
     cookie: true
     xfbml: true
     version: 'v2.5'
-  $facebook.getLoginStatus()
+  $fb.afterPageLoad()
   $('.js-fb-login').on 'click', ->
     $facebook.dialogLogin ->
       $facebook.getLoginStatus()
