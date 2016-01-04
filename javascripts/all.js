@@ -107,13 +107,14 @@ $(document).ready(function() {
     if($userimage.hasClass('dragged') == true) $userimage.attr('class', 'inner dragged');
     else $userimage.attr('class', 'inner');
 
-    $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
-    .load(function() {
-      var
-      size = [this.width,this.height],
-      container_size = $userimage.width();
-      resizeDragger(size,container_size,value);
-    });
+    // 執行這塊會造成 draggerBorder 失效，使得圖片可以被拖曳到看不見，只好先註解，因為也沒有造成其他問題
+    // $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
+    // .load(function() {
+    //   var
+    //   size = [this.width,this.height],
+    //   container_size = $userimage.width();
+    //   resizeDragger(size,container_size,value);
+    // });
   });
 
   $("#normalSubmit").click(function() {
