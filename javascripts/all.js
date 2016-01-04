@@ -7,6 +7,7 @@ $sizer = $('#size-slider'),
 $loading = $('#loading');
 $uploading = $('#uploading');
 var $originSize = $coverimage.width();
+var $exportSize = 500;
 
 function resetUserImage(pos) {
   $userimage
@@ -59,7 +60,7 @@ $(document).ready(function() {
       $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
       .load(function() {
         var
-        size = [this.width,this.height],
+        size = [$originSize, $originSize],
         width = size[0]*(ui.value)/100,
         height = size[1]*(ui.value)/100,
         left = center[0] - width*0.5,
@@ -143,7 +144,7 @@ window.getBase64 = function() {
   basesize = $userimage.width(),
   size = $util.getBackgroundSize($userimage.css('background-size')),
   position = $util.getBackgroundPosition($userimage.css('background-position')),
-  scale = basesize/500;
+  scale = basesize/$exportSize;
 
   var
   template = $('input[name=template]:checked').val(),
@@ -160,14 +161,14 @@ window.getBase64 = function() {
   userimage.src = source;
 
   var resize_canvas = document.getElementById("result");
-  resize_canvas.width = 500;
-  resize_canvas.height = 500;
+  resize_canvas.width = $exportSize;
+  resize_canvas.height = $exportSize;
   var ctx = resize_canvas.getContext("2d");
-  ctx.rect(0,0,500,500);
+  ctx.rect(0,0,$exportSize,$exportSize);
   ctx.fillStyle="#CCCCCC";
   ctx.fill();
   ctx.drawImage(userimage,x,y,w,h);
-  ctx.drawImage(cover,0,0,500,500);
+  ctx.drawImage(cover,0,0,$exportSize,$exportSize);
 
   return resize_canvas.toDataURL("image/png");
 }
@@ -260,7 +261,7 @@ window.loadImage = function(files) {
       imgH = this.height
     }
     var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, sx, sy, imgW, imgH, 0, 0, $originSize, $originSize);
+    ctx.drawImage(img, sx, sy, imgW, imgH, 0, 0, $exportSize, $exportSize);
     var base64 = canvas.toDataURL("image/png");
 
     $('#source').attr('value',base64);
@@ -367,13 +368,15 @@ function nonImageLoadState() {
   dftImage.src = "/images/sample.jpg";
   function drawDftImage(dftImage) {
     var dftcv = document.getElementById("canvas");
-    dftcv.width = $originSize;
-    dftcv.height = $originSize;
+    dftcv.width = $exportSize;
+    dftcv.height = $exportSize;
     var dftctx = dftcv.getContext("2d");
-    dftctx.drawImage(dftImage, 0, 0, dftImage.width, dftImage.height, 0, 0, $originSize, $originSize);
+    dftctx.drawImage(dftImage, 0, 0, dftImage.width, dftImage.height, 0, 0, $exportSize, $exportSize);
     var dftimgbase64 = dftcv.toDataURL("image/png");
     $('#source').attr('value',dftimgbase64);
-    $userimage.css('background-image','url('+dftimgbase64+')');
+    value = $originSize+'px '+$originSize+'px'
+    $userimage.css('background-image','url('+dftimgbase64+')').
+      css('background-size', value)
   }
   drawDftImage(dftImage);
 }

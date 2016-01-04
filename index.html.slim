@@ -8,9 +8,9 @@ html lang="zh-TW"
     = render '/partial/editor_section'
     = render '/partial/action_section'
 
-    / form action="#" onsubmit="return false;"
-    /   input#uploadInput name="Filedata" type="file"
-    /   #uploading 圖片讀取中，請稍後
+    form action="#" onsubmit="return false;"
+      input#uploadInput name="Filedata" type="file"
+      #uploading 圖片讀取中，請稍後
     input#source name="source" type="hidden" value="/images/sample.jpg"
     .hide
       canvas#canvas
