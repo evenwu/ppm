@@ -1,25 +1,23 @@
 .intro-section
 
-  padding: 48px 0px
+  padding: 72px 0px
+  background-image: url('/images/img-mobile.png')
+  background-repeat: no-repeat
+  background-position: right bottom
 
   .container
     +pie-clearfix
     +box-sizing(border-box)
 
-  .title
-    text-align: center
-    +adjust-font-size-to(24px, 1.25)
-
-    &:after
-      content: ''
-      display: block
-      margin: 24px auto
-      +replace-text-with-svg("img_no2")
-
-  .description
+  .title, .description
     max-width: 272px
     margin-left: auto
     margin-right: auto
+
+  .title
+    +adjust-font-size-to(24px, 1.25)
+
+  .description
     +margin-trailer(1.5)
     +adjust-font-size-to(15px)
 
@@ -31,23 +29,16 @@
   +at-breakpoint($pad)
     padding: 144px 0
     background-image: url('/images/img-top.png')
-    background-repeat: no-repeat
     background-position: 80% 30%
     +background-size(cover)
 
-
+    .title, .description
+      max-width: 400px
+      margin-left: 0
 
     .title
+      +adjust-font-size-to(28px, 1.25)
       text-align: left
-
-      &:after
-        display: none
-
-    .description
-      min-width: 275px
-      max-width: 400px
-      margin-left: 0px
-      margin-right: 0px
 
     .start
       margin: 0px
