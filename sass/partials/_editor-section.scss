@@ -1,7 +1,6 @@
 .editor-section {
 
   padding: 48px 0px;
-  // background-color: lighten(#183840, 2.5%);
   background-color: white;
 
   .upload-image {
@@ -229,6 +228,10 @@
       vertical-align: top;
     }
 
+    .preview {
+      @include trailer(0);
+    }
+
     .upload-image {
       max-width: none;
     }
@@ -266,9 +269,18 @@
   }
 
   @include at-breakpoint($desktop) {
-    // padding: 200px 0;
+    position: relative;
+    @include box-sizing(border-box);
+    height: 70vh;
+    min-height: 720px;
+    padding: 0;
 
     .container {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      @include translateY(-50%);
       padding: 0 24px;
     }
 
