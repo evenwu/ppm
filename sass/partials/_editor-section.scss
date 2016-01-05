@@ -176,6 +176,7 @@
       background-size: cover;
       background-position: center;
       width: 20%;
+      @include border-radius(0px);
       &.active {
         @include box-shadow(none);
       }
