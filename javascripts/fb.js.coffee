@@ -20,7 +20,6 @@ window.$fb =
   afterLogin: (response)->
     $fb.token  = response.authResponse.accessToken
     $fb.userID = response.authResponse.userID;
-    $facebook.getUserPicture()
     $('body').addClass('fb-connected')
   # 檢查到沒登入、或有登入沒授權
   notLogin: ->
@@ -59,13 +58,15 @@ window.fbAsyncInit = ->
   $fb.afterPageLoad()
   $('.js-fb-login').on 'click', ->
     $facebook.dialogLogin ->
-      $facebook.getLoginStatus()
+      $facebook.getLoginStatus ->
+        $facebook.getUserPicture()
   $('.js-fb-upload').on 'click', ->
     if $fb.token  # 有登入
       $facebook.uploadPicture()
     else          # 沒登入
       $facebook.dialogLogin ->
-        $facebook.getLoginStatus()
+        $facebook.getLoginStatus ->
+          $facebook.uploadPicture()
         # 可能 anchor 回去看自己的照片會比較好
 
 class Facebook
@@ -77,12 +78,13 @@ class Facebook
       $util.urlToBlob $fb.picture, (blob)->
         loadImage [blob]
         $fb.afterUserPictureLoaded()
-  getLoginStatus: ->
+  getLoginStatus: (callback)->
     $fb.beforeGetLoginStatus()
     FB.getLoginStatus (response) ->
       status = response.status
       if status == 'connected'
         $fb.afterLogin(response)
+        callback()
       else if status == 'not_authorized'
         $fb.notLogin()
       else
