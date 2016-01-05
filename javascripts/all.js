@@ -104,7 +104,11 @@ $(document).ready(function() {
           .css('width',borderWidth+'px').css('height',borderHeight+'px')
           .css('top',borderTop+'px').css('left',borderLeft+'px');
       });
-
+      if(ui.value == 100) {
+        $dragger.draggable( 'disable' )
+      } else {
+        $dragger.draggable( 'enable' )
+      }
     }
   });
 
@@ -399,7 +403,11 @@ window.onresize = function(e) {
   $originSize = $coverimage.width()
   resizeDragger($originSize, $originSize)
   resetUserImage([$originSize, $originSize, 0, 0])
+  $draggerBorder
+    .css('width', '100%').css('height', '100%')
+    .css('top', 'auto').css('left', 'auto')
   changeSizerValue(100)
+  $dragger.draggable( 'disable' )
 }
 
 // smooth-scroll-link
