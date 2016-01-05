@@ -109,7 +109,7 @@ class Facebook
         url: url
         caption: $fb.shareCapition
       ), (response)->
-        w.resizeTo(550, 460)
+        $util.resizeWindow(w, 520, 400)
         if response.id
           url = "https://m.facebook.com/photo.php?fbid=" + response.id + "&prof=1"
           w.location.href = url

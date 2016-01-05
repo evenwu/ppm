@@ -41,6 +41,19 @@ class Util
     $.post endpoing, { data: base64 }, (result)->
       callback(result.url, w)
 
+  resizeWindow: (w, width, height)->
+    if w.outerWidth
+      w.resizeTo(
+          width + (w.outerWidth - w.innerWidth),
+          height + (w.outerHeight - w.innerHeight)
+      )
+    else
+      w.resizeTo(500, 500)
+      w.resizeTo(
+          width + (500 - w.document.body.offsetWidth),
+          height + (500 - w.document.body.offsetHeight)
+      )
+
 window.$util = new Util()
 
 window.xx = (v)->
