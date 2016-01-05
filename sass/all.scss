@@ -53,3 +53,16 @@ br.word-break-on-mobile {
   display: inline-block;
   @include nowrap;
 }
+
+// 緊急公告
+.tip-block {
+  background-color: #E7E879;
+  color: black;
+  padding: 12px 0;
+  text-align: center;
+}
+
+.tip-block-title {
+  @include adjust-font-size-to(15px);
+  @include trailer(0);
+}
