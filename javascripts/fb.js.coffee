@@ -12,7 +12,7 @@ window.$fb =
   picture: null
   perms: "public_profile,user_photos,publish_actions"
   appId: fbappid
-  shareCapition: 'http://2.iing.tw'
+  shareCapition: '' # 不要幫 user 下文案
   # 網頁 load 完後想要做啥
   afterPageLoad: ->
     # $facebook.getLoginStatus() # 先取消自動抓 fb 頭像
@@ -90,18 +90,28 @@ class Facebook
       $fb.afterGetLoginStatus()
   dialogLogin: (callback)->
     FB.login ((response)->
+      # xx(response)
       callback(response)
-    ), scope: $fb.perms
+    ), { scope: $fb.perms, return_scopes: true }
+  publishPost: (imgurl)->
+    FB.api '/me/feed', 'post', (
+      link: 'http://2.iing.tw'
+      picture: imgurl
+    ), (response)->
+      xx(response.id)
   uploadPicture: ->
-    endpoing = "http://staging.iing.tw/badges.json"
+    endpoing = "http://iing.tw/badges.json"
+    w = window.open("/waiting.html", "wait", "width=550, height=460, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
     $.post endpoing, { data: getBase64() }, (result)->
+      $facebook.publishPost(result.url)
       FB.api '/me/photos', 'post', (
         access_token: $fb.token
         url: result.url
         caption: $fb.shareCapition
       ), (response)->
+        # xx(response)
         if response.id
           url = "https://m.facebook.com/photo.php?fbid=" + response.id + "&prof=1"
-          window.open(url, "", "width=550, height=460, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
+          w.location.href = url
 
 window.$facebook = new Facebook()

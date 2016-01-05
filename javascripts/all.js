@@ -7,11 +7,16 @@ $sizer = $('#size-slider'),
 $loading = $('#loading');
 $uploading = $('#uploading');
 var $originSize = $coverimage.width();
+var $exportSize = 500;
 
 function resetUserImage(pos) {
   $userimage
     .css('background-size',pos[0]+'px '+pos[1]+'px')
     .css('background-position',pos[2]+'px '+pos[3]+'px');
+}
+
+function changeSizerValue(value) {
+  $sizer.slider('value', value)
 }
 
 $(window).load(function() {
@@ -59,11 +64,18 @@ $(document).ready(function() {
       $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
       .load(function() {
         var
-        size = [this.width,this.height],
+        size = [$originSize, $originSize],
         width = size[0]*(ui.value)/100,
         height = size[1]*(ui.value)/100,
         left = center[0] - width*0.5,
         top = center[1] - height*0.5;
+
+        // 強制把圖放回中間
+        // left = 0 - ((width - $originSize) / 2)
+        // top = 0 - ((height - $originSize) / 2)
+
+        // 以下是針對四個角在 resize 時做調整，避免圖在縮小時跑到邊界外 XD
+        // 但後來決定 resize 直接強制把圖放回中間，所以就註解了
         if(top > 0){
           top = 0
         } else if(top + height < $originSize) {
@@ -74,6 +86,7 @@ $(document).ready(function() {
         } else if(left + width < $originSize){
           left = $originSize - width
         }
+
         $dragger
           .css('width',width+'px').css('height',height+'px')
           .css('top',top+'px').css('left',left+'px');
@@ -106,13 +119,14 @@ $(document).ready(function() {
     if($userimage.hasClass('dragged') == true) $userimage.attr('class', 'inner dragged');
     else $userimage.attr('class', 'inner');
 
-    $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
-    .load(function() {
-      var
-      size = [this.width,this.height],
-      container_size = $userimage.width();
-      resizeDragger(size,container_size,value);
-    });
+    // 執行這塊會造成 draggerBorder 失效，使得圖片可以被拖曳到看不見，只好先註解，因為也沒有造成其他問題
+    // $('<img/>').attr('src',$util.getBackgroundImageUrl($userimage))
+    // .load(function() {
+    //   var
+    //   size = [this.width,this.height],
+    //   container_size = $userimage.width();
+    //   resizeDragger(size,container_size,value);
+    // });
   });
 
   $("#normalSubmit").click(function() {
@@ -143,7 +157,7 @@ window.getBase64 = function() {
   basesize = $userimage.width(),
   size = $util.getBackgroundSize($userimage.css('background-size')),
   position = $util.getBackgroundPosition($userimage.css('background-position')),
-  scale = basesize/500;
+  scale = basesize/$exportSize;
 
   var
   template = $('input[name=template]:checked').val(),
@@ -160,14 +174,14 @@ window.getBase64 = function() {
   userimage.src = source;
 
   var resize_canvas = document.getElementById("result");
-  resize_canvas.width = 500;
-  resize_canvas.height = 500;
+  resize_canvas.width = $exportSize;
+  resize_canvas.height = $exportSize;
   var ctx = resize_canvas.getContext("2d");
-  ctx.rect(0,0,500,500);
+  ctx.rect(0,0,$exportSize,$exportSize);
   ctx.fillStyle="#CCCCCC";
   ctx.fill();
   ctx.drawImage(userimage,x,y,w,h);
-  ctx.drawImage(cover,0,0,500,500);
+  ctx.drawImage(cover,0,0,$exportSize,$exportSize);
 
   return resize_canvas.toDataURL("image/png");
 }
@@ -186,7 +200,7 @@ function downloadImage(){
   } else {
     base64 = base64.replace("image/png", "image/png;headers=Content-Disposition%3A%20attachment%3B%20filename=iing-no-2.png;")
     $('#download').attr('href',base64);
-    console.log(base64)
+    // console.log(base64)
     $('#download').attr('download', "iing-no-2.png");
     $('#download').attr('target', "_blank");
     $('#download')[0].click();
@@ -206,6 +220,7 @@ $(function(){
     input = document.getElementById('uploadInput');
     if(input.files[0]) {
       loadImage(input.files);
+      changeSizerValue(100)
     }
   });
 });
@@ -260,7 +275,7 @@ window.loadImage = function(files) {
       imgH = this.height
     }
     var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, sx, sy, imgW, imgH, 0, 0, $originSize, $originSize);
+    ctx.drawImage(img, sx, sy, imgW, imgH, 0, 0, $exportSize, $exportSize);
     var base64 = canvas.toDataURL("image/png");
 
     $('#source').attr('value',base64);
@@ -367,15 +382,24 @@ function nonImageLoadState() {
   dftImage.src = "/images/sample.jpg";
   function drawDftImage(dftImage) {
     var dftcv = document.getElementById("canvas");
-    dftcv.width = $originSize;
-    dftcv.height = $originSize;
+    dftcv.width = $exportSize;
+    dftcv.height = $exportSize;
     var dftctx = dftcv.getContext("2d");
-    dftctx.drawImage(dftImage, 0, 0, dftImage.width, dftImage.height, 0, 0, $originSize, $originSize);
+    dftctx.drawImage(dftImage, 0, 0, dftImage.width, dftImage.height, 0, 0, $exportSize, $exportSize);
     var dftimgbase64 = dftcv.toDataURL("image/png");
     $('#source').attr('value',dftimgbase64);
-    $userimage.css('background-image','url('+dftimgbase64+')');
+    value = $originSize+'px '+$originSize+'px'
+    $userimage.css('background-image','url('+dftimgbase64+')').
+      css('background-size', value)
   }
   drawDftImage(dftImage);
+}
+
+window.onresize = function(e) {
+  $originSize = $coverimage.width()
+  resizeDragger($originSize, $originSize)
+  resetUserImage([$originSize, $originSize, 0, 0])
+  changeSizerValue(100)
 }
 
 // smooth-scroll-link

@@ -4,16 +4,13 @@ html lang="zh-TW"
   body#drop
     .header
       h1.logo: a href="http://iing.tw" 換頭像，一起點亮台灣！
-    .tip-block
-      .container
-        h2.tip-block-title 目前只支援桌面版本的 Chrome、Firefox、Edge，我們會努力加速支援 Safari。<br class="hide-mobile">若高手等不及，這包 PNG 檔就<span class="word-no-break">直接給您<a href="/download/2.zip" download>下載</a>了。</span>
     = render '/partial/intro_section'
     = render '/partial/editor_section'
     = render '/partial/action_section'
 
-    form action="#" onsubmit="return false;"
-      input#uploadInput name="Filedata" type="file"
-      #uploading 圖片讀取中，請稍後
+    / form action="#" onsubmit="return false;"
+    /   input#uploadInput name="Filedata" type="file"
+    /   #uploading 圖片讀取中，請稍後
     input#source name="source" type="hidden" value="/images/sample.jpg"
     .hide
       canvas#canvas
