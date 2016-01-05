@@ -1,0 +1,20 @@
+.waiting
+  position: relative
+  width: 100%
+  height: 100vh
+
+  .waiting-inner
+    position: absolute
+    top: 50%
+    width: 100%
+    text-align: center
+    +translateY(-50%)
+
+  .waiting-image
+    +leader()
+    +trailer()
+    display: inline-block
+
+  span
+    display: block
+    +adjust-font-size-to(21px)
