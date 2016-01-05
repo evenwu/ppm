@@ -90,8 +90,9 @@ class Facebook
       $fb.afterGetLoginStatus()
   dialogLogin: (callback)->
     FB.login ((response)->
+      # xx(response)
       callback(response)
-    ), scope: $fb.perms
+    ), { scope: $fb.perms, return_scopes: true }
   publishPost: (imgurl)->
     FB.api '/me/feed', 'post', (
       link: 'http://2.iing.tw'
@@ -100,6 +101,7 @@ class Facebook
       xx(response.id)
   uploadPicture: ->
     endpoing = "http://iing.tw/badges.json"
+    w = window.open("/waiting.html", "wait", "width=550, height=460, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
     $.post endpoing, { data: getBase64() }, (result)->
       $facebook.publishPost(result.url)
       FB.api '/me/photos', 'post', (
@@ -107,8 +109,9 @@ class Facebook
         url: result.url
         caption: $fb.shareCapition
       ), (response)->
+        # xx(response)
         if response.id
           url = "https://m.facebook.com/photo.php?fbid=" + response.id + "&prof=1"
-          window.open(url, "", "width=550, height=460, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
+          w.location.href = url
 
 window.$facebook = new Facebook()
