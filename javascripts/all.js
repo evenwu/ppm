@@ -3,7 +3,7 @@ $userimage = $('#userimage .inner'),
 $coverimage = $('#coverimage .inner'),
 $dragger = $('#dragger'),
 $draggerBorder = $('#dragger-border'),
-$sizer = $('#size-slider'),
+$sizer = $('.js-slider'),
 $loading = $('#loading');
 $uploading = $('#uploading');
 var $originSize = $coverimage.width();
@@ -15,8 +15,12 @@ function resetUserImage(pos) {
     .css('background-position',pos[2]+'px '+pos[3]+'px');
 }
 
-function changeSizerValue(value) {
+function changeSizerValue(value, runCallback) {
   $sizer.slider('value', value)
+  if(runCallback) $sizer.slider('option', 'slide').call();
+}
+function getSizerValue() {
+  return $sizer.slider('value')
 }
 
 $(window).load(function() {
@@ -52,11 +56,28 @@ $(document).ready(function() {
   });
 
   // size slider
+  $sizer.parent().find('.zoomin').on('click', function(){
+    value = $sizer.slider('value') + 10
+    value = value - (value%10)
+    max = $sizer.slider('option', 'max')
+    if(value > max) value = max
+    changeSizerValue(value, true)
+    return false
+  });
+  $sizer.parent().find('.zoomout').on('click', function(){
+    value = $sizer.slider('value') - 10
+    value = value - (value%10)
+    min = $sizer.slider('option', 'min')
+    if(value < min) value = min
+    changeSizerValue(value, true)
+    return false
+  });
   $sizer.slider({
     value: 100,
     max: 200,
     min: 100,
     slide: function(event, ui) {
+      var currentValue = getSizerValue()
       var
       truesize = $util.getBackgroundSize($userimage.css('background-size')),
       position = $util.getBackgroundPosition($userimage.css('background-position')),
@@ -65,8 +86,8 @@ $(document).ready(function() {
       .load(function() {
         var
         size = [$originSize, $originSize],
-        width = size[0]*(ui.value)/100,
-        height = size[1]*(ui.value)/100,
+        width = size[0]*(currentValue)/100,
+        height = size[1]*(currentValue)/100,
         left = center[0] - width*0.5,
         top = center[1] - height*0.5;
 
@@ -104,7 +125,7 @@ $(document).ready(function() {
           .css('width',borderWidth+'px').css('height',borderHeight+'px')
           .css('top',borderTop+'px').css('left',borderLeft+'px');
       });
-      if(ui.value == 100) {
+      if( currentValue ) {
         $dragger.draggable( 'disable' )
       } else {
         $dragger.draggable( 'enable' )
