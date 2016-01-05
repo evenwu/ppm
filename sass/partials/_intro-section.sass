@@ -1,8 +1,9 @@
 .intro-section
 
-  // 沒有緊急公告時的 padding
-  // padding: 72px 0px
-  padding: 48px 0px
+  +box-sizing(border-box)
+  position: relative
+  height: 90vh
+  min-height: 440px
   background-image: url('/images/img-mobile.png')
   background-repeat: no-repeat
   background-position: right bottom
@@ -10,6 +11,13 @@
   .container
     +pie-clearfix
     +box-sizing(border-box)
+    +padding-leader(2)
+    +padding-trailer(2)
+    position: absolute
+    left: 0
+    right: 0
+    top: 50%
+    +translateY(-50%)
 
   .title, .description
     max-width: 272px
@@ -29,10 +37,16 @@
     margin: 36px auto 0
 
   +at-breakpoint($pad)
-    padding: 144px 0
+    height: 80vh
+    min-height: 480px
     background-image: url('/images/img-top.png')
     background-position: 80% 30%
     +background-size(cover)
+
+    .container
+      +padding-leader(4)
+      +padding-trailer(4)
+      top: 47.5%
 
     .title, .description
       max-width: 400px
@@ -46,7 +60,8 @@
       margin: 24px 0 0
 
   +at-breakpoint($desktop)
-    padding: 188px 0
+    height: 70vh
+    min-height: 600px
 
     .title
       +adjust-font-size-to(36px, 1.5)

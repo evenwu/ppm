@@ -35,6 +35,12 @@ class Util
   pix2int = (string)->
     parseFloat(string.replace('px',''));
 
+  uploadBase64: (base64, callback)->
+    endpoing = "http://iing.tw/badges.json"
+    w = window.open("/waiting.html", "wait", "width=500, height=500, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
+    $.post endpoing, { data: base64 }, (result)->
+      callback(result.url, w)
+
 window.$util = new Util()
 
 window.xx = (v)->

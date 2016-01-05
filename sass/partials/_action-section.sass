@@ -1,10 +1,12 @@
 .action-section
   +box-sizing(border-box)
   position: relative
-  padding: 48px 0px
   text-align: center
-  min-height: 400px
+  min-height: 440px
   height: 90vh
+  background-image: url('/images/img-mobile-bottom.png')
+  background-repeat: no-repeat
+  background-position: left top
 
   .container
     +pie-clearfix
@@ -12,7 +14,7 @@
     position: absolute
     left: 0
     right: 0
-    top: 40%
+    top: 45%
     +translateY(-50%)
 
   .tip
@@ -39,10 +41,9 @@
     +adjust-font-size-to(15px)
 
   +at-breakpoint($pad)
-    padding: 144px 0
-    height: 60vh
+    height: 80vh
+    min-height: 480px
     background-image: url('/images/img-bottom.png')
-    background-repeat: no-repeat
     background-position: 20% 70%
     +background-size(cover)
 
@@ -52,3 +53,7 @@
 
     .copyright
       +trailer(2)
+
+  +at-breakpoint($desktop)
+    // height: 70vh
+    min-height: 600px

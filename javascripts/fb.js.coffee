@@ -102,16 +102,14 @@ class Facebook
     ), (response)->
       xx(response.id)
   uploadPicture: ->
-    endpoing = "http://iing.tw/badges.json"
-    w = window.open("/waiting.html", "wait", "width=550, height=460, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
-    $.post endpoing, { data: getBase64() }, (result)->
-      $facebook.publishPost(result.url)
+    $util.uploadBase64 getBase64() ,(url, w)->
+      $facebook.publishPost(url)
       FB.api '/me/photos', 'post', (
         access_token: $fb.token
-        url: result.url
+        url: url
         caption: $fb.shareCapition
       ), (response)->
-        # xx(response)
+        w.resizeTo(550, 460)
         if response.id
           url = "https://m.facebook.com/photo.php?fbid=" + response.id + "&prof=1"
           w.location.href = url

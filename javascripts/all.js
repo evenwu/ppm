@@ -104,7 +104,11 @@ $(document).ready(function() {
           .css('width',borderWidth+'px').css('height',borderHeight+'px')
           .css('top',borderTop+'px').css('left',borderLeft+'px');
       });
-
+      if(ui.value == 100) {
+        $dragger.draggable( 'disable' )
+      } else {
+        $dragger.draggable( 'enable' )
+      }
     }
   });
 
@@ -198,12 +202,16 @@ function downloadImage(){
     var tab=window.open();
     tab.document.write(html);
   } else {
-    base64 = base64.replace("image/png", "image/png;headers=Content-Disposition%3A%20attachment%3B%20filename=iing-no-2.png;")
-    $('#download').attr('href',base64);
-    // console.log(base64)
-    $('#download').attr('download', "iing-no-2.png");
-    $('#download').attr('target', "_blank");
-    $('#download')[0].click();
+    $util.uploadBase64(base64 ,function(url, w) {
+      w.resizeTo(500, 500)
+      w.location.href = url
+    })
+    // 原本的 download 方式
+    // base64 = base64.replace("image/png", "image/png;headers=Content-Disposition%3A%20attachment%3B%20filename=iing-no-2.png;")
+    // $('#download').attr('href',base64);
+    // $('#download').attr('download', "iing-no-2.png");
+    // $('#download').attr('target', "_blank");
+    // $('#download')[0].click();
   }
 }
 
@@ -399,7 +407,11 @@ window.onresize = function(e) {
   $originSize = $coverimage.width()
   resizeDragger($originSize, $originSize)
   resetUserImage([$originSize, $originSize, 0, 0])
+  $draggerBorder
+    .css('width', '100%').css('height', '100%')
+    .css('top', 'auto').css('left', 'auto')
   changeSizerValue(100)
+  $dragger.draggable( 'disable' )
 }
 
 // smooth-scroll-link
