@@ -24,7 +24,7 @@ $(window).load(function() {
   container_size = $userimage.width(),
   userimage_size = $util.getImgSize($util.getBackgroundImageUrl($userimage));
   pos = resizeDragger(userimage_size,container_size);
-  nonImageLoadState();
+  // nonImageLoadState();
   resetUserImage(pos)
 });
 
