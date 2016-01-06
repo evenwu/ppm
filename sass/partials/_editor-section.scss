@@ -224,11 +224,10 @@
     }
 
     .editor-row {
-      display: inline-block;
+      float: left;
       width: 50%;
       position: relative;
       padding: 0 12px;
-      vertical-align: top;
     }
 
     .preview {
