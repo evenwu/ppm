@@ -37,12 +37,20 @@ class Util
 
   uploadBase64: (base64, callback)->
     endpoing = "http://iing.tw/badges.json"
+    directDownload = false
     if $util.isFBWebview()
       w = window
     else
       w = window.open("/waiting.html", "wait", "width=500, height=500, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
+      if $util.isDesktop() && !$util.isSafari()
+        directDownload = true
     $.post endpoing, { data: base64 }, (result)->
-      callback(result.url, w)
+      if directDownload
+        $util.urlToBlob result.url, (blob)->
+          w.close()
+          saveAs(blob, 'iing-no-2.png')
+      else
+        callback(result.url, w)
 
   resizeWindow: (w, width, height)->
     if w.outerWidth
@@ -60,8 +68,17 @@ class Util
   isFBWebview: ->
     navigator.userAgent.match(/FB/)
 
+  isDesktop: ->
+    WURFL.form_factor == 'Desktop'
+
+  isSafari: ->
+    /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+
 window.$util = new Util()
 
 window.xx = (v)->
   console.log(v)
 
+# document.write(WURFL.complete_device_name)
+# document.write(WURFL.form_factor)
+# document.write(WURFL.is_mobile)
