@@ -124,10 +124,12 @@
       color: #bbb;
     }
     .zoomin {
-      right: -48px;
+      @include replace-text-with-svg('icon-zoomin');
+      right: -50px;
     }
     .zoomout {
-      left: -48px;
+      @include replace-text-with-svg('icon-zoomout');
+      left: -50px;
     }
   }
   #userimage .inner {
@@ -147,13 +149,13 @@
       height: 100%;
     }
     img {
-      width: 43px;
-      height: 11px;
+      width: 200px;
+      height: 22px;
       position: absolute;
       top: 50%;
       left: 50%;
-      margin-top: -5px;
-      margin-left: -21px;
+      margin-top: -11px;
+      margin-left: -100px;
     }
   }
 

@@ -27,10 +27,19 @@
     padding: 9px 24px
     width: 100%
 
-  .icon-facebook, .icon-download-icon
-    font-size: 24px
-    vertical-align: middle
+  .icon-facebook, .icon-download
     margin-right: 6px
+    display: inline-block
+    vertical-align: middle
+
+  .icon-facebook
+    +replace-text-with-svg('icon-facebook')
+
+  .icon-download
+    position: relative
+    top: -3px
+    +replace-text-with-svg('icon-download')
+
 
   .copyright
     position: absolute
