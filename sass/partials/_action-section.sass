@@ -32,6 +32,20 @@
     display: inline-block
     vertical-align: middle
 
+  .js-fb-upload
+    position: relative
+
+  .js-fb-upload:after
+    content: '功能測試中'
+    position: absolute
+    left: 0
+    right: 0
+    bottom: -32px
+    +adjust-font-size-to(13px)
+    color: #999
+
+
+
   .icon-facebook
     +replace-text-with-svg('icon-facebook')
 
