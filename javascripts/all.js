@@ -205,7 +205,7 @@ function downloadImage(){
     var tab=window.open();
     tab.document.write(html);
   } else {
-    $util.uploadBase64(base64 ,function(url, w) {
+    $util.downloadByBase64(base64 ,function(url, w) {
       $util.resizeWindow(w, 500, 500)
       w.location.href = url
     })

@@ -35,6 +35,14 @@ class Util
   pix2int = (string)->
     parseFloat(string.replace('px',''));
 
+  downloadByBase64: (base64, callback)->
+    $util.uploadBase64 base64, (url, w)->
+      if $util.isDesktop() && !$util.isSafari()
+        $util.urlToBlob url, (blob)->
+          w.close()
+          saveAs(blob, 'iing-no-2.png')
+      else
+        callback(url, w)
   uploadBase64: (base64, callback)->
     endpoing = "http://iing.tw/badges.json"
     directDownload = false
@@ -42,15 +50,8 @@ class Util
       w = window
     else
       w = window.open("/waiting.html", "wait", "width=500, height=500, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
-      if $util.isDesktop() && !$util.isSafari()
-        directDownload = true
     $.post endpoing, { data: base64 }, (result)->
-      if directDownload
-        $util.urlToBlob result.url, (blob)->
-          w.close()
-          saveAs(blob, 'iing-no-2.png')
-      else
-        callback(result.url, w)
+      callback(result.url, w)
 
   resizeWindow: (w, width, height)->
     if w.outerWidth
