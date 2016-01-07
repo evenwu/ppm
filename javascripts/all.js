@@ -29,6 +29,9 @@ $(window).load(function() {
 });
 
 $(document).ready(function() {
+  if(location.href.indexOf("fb-review") >= 0) {
+    $('.js-fb-upload').show()
+  }
   // ie alert
   $("body").iealert({
     support: 'ie9',
