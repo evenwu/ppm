@@ -36,15 +36,19 @@
     position: relative
 
   .js-fb-upload:after
-    content: '功能測試中'
+    content: ''
     position: absolute
     left: 0
     right: 0
     bottom: -32px
     +adjust-font-size-to(13px)
     color: #999
+    +opacity(0)
+    +transition(opacity 0.5s)
 
-
+  .fb-connected  & .js-fb-upload:after
+    content: '點擊後若無反應，請再次點擊'
+    +opacity(1)
 
   .icon-facebook
     +replace-text-with-svg('icon-facebook')
