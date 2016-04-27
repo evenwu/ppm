@@ -44,14 +44,22 @@ class Util
       else
         callback(url, w)
   uploadBase64: (base64, callback)->
-    endpoing = "http://iing.tw/badges.json"
+    imgurClientId = 'd80f169cac97fa2'
+    endpoing = "https://api.imgur.com/3/upload"
     directDownload = false
     if $util.isFBWebview()
       w = window
     else
       w = window.open("/waiting.html", "wait", "width=500, height=500, menubar=no, resizable=no, scrollbars=no, status=no, titlebar=no, toolbar=no")
-    $.post endpoing, { data: base64 }, (result)->
-      callback(result.url, w)
+    base64 = base64.split(',').pop()
+    $.ajax
+      method: 'post'
+      url: endpoing
+      data: { image: base64, type: "base64" }
+      headers: 'Authorization': 'Client-ID ' + imgurClientId
+      success: (result)->
+        # console.log(result)
+        callback(result.data.link, w)
 
   resizeWindow: (w, width, height)->
     if w.outerWidth
